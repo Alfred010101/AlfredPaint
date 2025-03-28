@@ -1,5 +1,6 @@
 import components.ShapesPanel;
 import components.SplitPanel;
+import utils.Components;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,17 +26,23 @@ public class PaintApp extends JFrame
     private void initComponents()
     {
         toolGroup = new ButtonGroup();
-        javaShapes = new ShapesPanel("Up");
-        myShapes = new ShapesPanel("Down");
+
+        javaShapes = new ShapesPanel(Components.sf(toolGroup));
+        myShapes = new ShapesPanel(Components.sf(toolGroup));
 
         JPanel containerShapes = new JPanel();
         containerShapes.setLayout(new BoxLayout(containerShapes, BoxLayout.Y_AXIS));
         containerShapes.add(javaShapes);
-        containerShapes.add(Box.createRigidArea(new Dimension(0, 20)));
+        //containerShapes.add(Box.createRigidArea(new Dimension(0, 20)));
         containerShapes.add(myShapes);
+        //containerShapes.add(new ShapesPanel(Components.sf(toolGroup)));
+        containerShapes.add(Box.createVerticalGlue());
 
         JScrollPane scrollPane = new JScrollPane(containerShapes);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        //scrollPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
         splitPane = new SplitPanel(scrollPane, new JPanel());
         add(splitPane);

@@ -9,8 +9,8 @@ public class SplitPanel extends JSplitPane
     private Component paneLeft;
     private Component paneRight;
 
-    private final int MIN_LEFT_PANEL = 30;
-    private final int MAX_LEFT_PANEL = 600;
+    private final int MIN_LEFT_PANEL = 50;
+    private final int MAX_LEFT_PANEL = 160;
 
     public SplitPanel(Component paneLeft, Component paneRight)
     {
@@ -20,7 +20,7 @@ public class SplitPanel extends JSplitPane
 
         setContinuousLayout(true);
         setOneTouchExpandable(true);
-        setDividerLocation(200);
+        setDividerLocation(50);
 
         addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, (PropertyChangeEvent evt) ->
         {
