@@ -1,5 +1,6 @@
 import components.ShapesPanel;
 import components.SplitPanel;
+import components.ToolsPanel;
 import utils.Components;
 import utils.Const;
 import utils.interfaces.UpdateTabs;
@@ -13,6 +14,7 @@ public class PaintApp extends JFrame
     private JPanel javaShapes;
     private JPanel myShapes;
     private ButtonGroup toolGroup;
+    private JPanel toolsPanel;
 
     private JMenuBar menuBar;
 
@@ -39,9 +41,11 @@ public class PaintApp extends JFrame
 
         initJTabbed();
         initJMenu();
+        initToolsPanel();
         initJSplit();
 
         setJMenuBar(menuBar);
+        add(toolsPanel, BorderLayout.NORTH);
         add(splitPane, BorderLayout.CENTER);
         add(propertiesTabbed, BorderLayout.EAST);
     }
@@ -52,6 +56,11 @@ public class PaintApp extends JFrame
         Components.addFileMenu(menuBar);
         Components.addEditMenu(menuBar);
         Components.addViewMenu(menuBar, updateTabs());
+    }
+
+    private void initToolsPanel()
+    {
+        toolsPanel = new ToolsPanel(toolGroup);
     }
 
     private void initJSplit()

@@ -3,8 +3,10 @@ package utils;
 import components.sub.CustomToggleButton;
 import components.sub.ShapeIcon;
 import utils.interfaces.UpdateTabs;
+import utils.sub.SubComponents;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Components
 {
@@ -99,10 +101,56 @@ public class Components
 
     public static JPanel initFillPanel()
     {
-        JPanel panel = new JPanel();
-        panel.add(new JButton("Algo"));
-        panel.add(new JTextField(60));
-        return  panel;
+        CardLayout cardLayout = new CardLayout();
+        JPanel container = new JPanel();
+
+        container.setLayout(new BorderLayout());
+
+        JToggleButton[] btns = new JToggleButton[4];
+        btns[0] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Relleno texturizado");
+        btns[1] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Relleno Solido");
+        btns[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Relleno degradado");
+        btns[3] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Relleno texturizado");
+
+        btns[1].setSelected(true);
+        ButtonGroup toolGroup = new ButtonGroup();
+
+        for (int i = 0; i < btns.length; i++)
+        {
+            btns[i].setPreferredSize(new Dimension(30, 30)); // Tamaño compacto
+            btns[i].setMinimumSize(new Dimension(30, 30));
+            btns[i].setMaximumSize(new Dimension(30, 30));
+            toolGroup.add(btns[i]);
+        }
+
+        JPanel empty = new JPanel();
+        empty.add(new JLabel("No paint"));
+        JPanel fillPanel = SubComponents.createFillPanel();
+        JPanel strokePanel = SubComponents.createGradientPanel();
+        JPanel opacityPanel = SubComponents.createOpacityPanel();
+
+        JPanel containerCard = new JPanel(cardLayout);
+        containerCard.add(empty, "Empty");
+        containerCard.add(fillPanel, "Relleno");
+        containerCard.add(strokePanel, "Borde");
+        containerCard.add(opacityPanel, "Opacidad");
+
+        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        opciones.add(btns[0]);
+        opciones.add(btns[1]);
+        opciones.add(btns[2]);
+        opciones.add(btns[3]);
+
+        btns[0].addActionListener(e -> cardLayout.show(containerCard, "Empty"));
+        btns[1].addActionListener(e -> cardLayout.show(containerCard, "Relleno"));
+        btns[2].addActionListener(e -> cardLayout.show(containerCard, "Borde"));
+        btns[3].addActionListener(e -> cardLayout.show(containerCard, "Opacidad"));
+
+        cardLayout.show(containerCard, "Relleno");
+
+        container.add(opciones, BorderLayout.NORTH);
+        container.add(containerCard, BorderLayout.CENTER);
+        return container;
     }
 
     public static JPanel initStrokeStylePanel()
