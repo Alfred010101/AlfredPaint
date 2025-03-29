@@ -1,6 +1,7 @@
 import components.ShapesPanel;
 import components.SplitPanel;
 import utils.Components;
+import utils.Const;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,8 @@ public class PaintApp extends JFrame
     private JPanel javaShapes;
     private JPanel myShapes;
     private ButtonGroup toolGroup;
+
+    private JMenuBar menuBar;
 
     public PaintApp()
     {
@@ -31,12 +34,20 @@ public class PaintApp extends JFrame
         javaShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
         myShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
 
-        initJSPrit();
+        initJMenu();
+        initJSplit();
 
+        setJMenuBar(menuBar);
         add(splitPane, BorderLayout.CENTER);
     }
 
-    private void initJSPrit()
+    private void initJMenu()
+    {
+        menuBar = new JMenuBar();
+        Components.addViewMenu(menuBar);
+    }
+
+    private void initJSplit()
     {
         JPanel containerShapes = new JPanel();
         containerShapes.setLayout(new BoxLayout(containerShapes, BoxLayout.Y_AXIS));

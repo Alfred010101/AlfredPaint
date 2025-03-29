@@ -45,4 +45,16 @@ public class Components
 
         return buttons;
     }
+
+    public static void addViewMenu(JMenuBar menuBar)
+    {
+        JMenu viewMenu = new JMenu("View");
+        for (int i = 0; i < Const.TAB_NAMES.length; i++) {
+            JCheckBoxMenuItem checkBoxItem = new JCheckBoxMenuItem(Const.TAB_NAMES[i], Const.tabVisibility[i]);
+            int tabIndex = i;
+//            checkBoxItem.addActionListener(e -> toggleTabVisibility(tabIndex, checkBoxItem.isSelected()));
+            viewMenu.add(checkBoxItem);
+        }
+        menuBar.add(viewMenu);
+    }
 }
