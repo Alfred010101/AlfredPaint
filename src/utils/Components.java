@@ -4,11 +4,10 @@ import components.sub.CustomToggleButton;
 import components.sub.ShapeIcon;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Components
 {
-    public static JToggleButton[] sf(ButtonGroup toolGroup)
+    public static JToggleButton[] createTogglesShapes(ButtonGroup toolGroup)
     {
         JToggleButton[] buttons = new JToggleButton[12];
         buttons[0] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Rectángulo");

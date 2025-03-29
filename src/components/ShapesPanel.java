@@ -26,7 +26,6 @@ public class ShapesPanel extends JPanel
             public void componentResized(ComponentEvent e)
             {
                 int availableWidth = getWidth() - 20; // Descontar márgenes
-                System.out.println(availableWidth);
                 int buttonWidth = 30;
                 int spacing = 0;
 
