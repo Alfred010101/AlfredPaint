@@ -8,7 +8,7 @@ import java.awt.event.ComponentEvent;
 
 public class ShapesPanel extends JPanel
 {
-    public ShapesPanel(JToggleButton[] buttons)
+    public ShapesPanel(JToggleButton[] buttons, String title)
     {
         super(new ShapesPanel.ResponsiveGridLayout(1));
         for (JToggleButton btn : buttons)
@@ -19,7 +19,7 @@ public class ShapesPanel extends JPanel
 
             add(btn);
         }
-        setBorder(BorderFactory.createTitledBorder("Java"));
+        setBorder(BorderFactory.createTitledBorder(title));
         addComponentListener(new ComponentAdapter()
         {
             @Override

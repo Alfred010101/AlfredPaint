@@ -1,6 +1,6 @@
 package components.sub;
 
-import utils.ShapeType;
+import utils.enums.ShapeType;
 
 import javax.swing.*;
 import java.awt.*;

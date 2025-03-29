@@ -1,6 +1,7 @@
 import components.ShapesPanel;
 import components.SplitPanel;
 import components.ToolsPanel;
+import components.paint.WorkPanel;
 import utils.Components;
 import utils.Const;
 import utils.interfaces.UpdateTabs;
@@ -10,13 +11,14 @@ import java.awt.*;
 
 public class PaintApp extends JFrame
 {
+    private JMenuBar menuBar;
     private JSplitPane splitPane;
     private JPanel javaShapes;
     private JPanel myShapes;
-    private ButtonGroup toolGroup;
     private JPanel toolsPanel;
+    private JPanel workPanel;
 
-    private JMenuBar menuBar;
+    private ButtonGroup toolGroup;
 
     private JTabbedPane propertiesTabbed;
     private JPanel[] propertiesPanels;
@@ -36,12 +38,13 @@ public class PaintApp extends JFrame
     {
         toolGroup = new ButtonGroup();
 
-        javaShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
-        myShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
+        javaShapes = new ShapesPanel(Components.createTogglesJavaShapes(toolGroup), "Java");
+        myShapes = new ShapesPanel(Components.createTogglesMyShapes(toolGroup), "Own");
 
         initJTabbed();
         initJMenu();
         initToolsPanel();
+        initWorkPanel();
         initJSplit();
 
         setJMenuBar(menuBar);
@@ -66,7 +69,12 @@ public class PaintApp extends JFrame
     private void initJSplit()
     {
         JScrollPane scrollPane = Components.initJSplit(javaShapes,myShapes);
-        splitPane = new SplitPanel(scrollPane, new JPanel());
+        splitPane = new SplitPanel(scrollPane, workPanel);
+    }
+
+    private void initWorkPanel()
+    {
+        workPanel = new WorkPanel();
     }
 
     private void initJTabbed()

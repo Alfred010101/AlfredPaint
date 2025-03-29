@@ -2,7 +2,7 @@ package components;
 
 import components.sub.CustomToggleButton;
 import components.sub.ShapeIcon;
-import utils.ShapeType;
+import utils.enums.ShapeType;
 
 import javax.swing.*;
 import java.awt.*;
