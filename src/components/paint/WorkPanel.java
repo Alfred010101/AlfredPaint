@@ -1,5 +1,11 @@
 package components.paint;
 
+import model.MyShape;
+import utils.enums.FillType;
+import utils.enums.ShapeType;
+import utils.global.DrawVar;
+import utils.global.Global;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,24 +28,23 @@ public class WorkPanel extends JPanel
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-//        for (Shape shape : GV.shapes)
-//        {
-//            g2.draw(shape);
-//        }
-//
-//        if (GV.selectedShape != null)
-//        {
-//            Rectangle bounds = GV.selectedShape.getBounds();
-//
-//            Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL,
-//                    0, new float[]{5}, 0);
-//            g2.setStroke(dashed);
-//            g2.setColor(Color.RED);
-//            g2.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-//        }
 
-//        if (GV.isDrawingPolygon && GV.currentPolygon.npoints > 1) {
-//            g2.draw(GV.currentPolygon);
-//        }
+        for (MyShape shape : Global.shapes)
+        {
+            g2.draw(shape.getShape());
+        }
+
+        if (Global.ACTIVE_MODE instanceof ShapeType && DrawVar.partialShape != null)
+        {
+            GradientPaint gradient = Draw.getGradient();
+
+            if(gradient != null)
+            {
+                g2.setPaint(gradient);
+                g2.fill(DrawVar.partialShape);
+            }
+            g2.setColor(DrawVar.strokeColor);
+            g2.draw(DrawVar.partialShape);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package utils.sub;
 
+import utils.global.DrawVar;
+import utils.interfaces.UpdatePreviewPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -13,7 +16,7 @@ public class SubComponents
         panel.add(new JLabel("Color:"));
 
         JButton colorButton = new JButton();
-        colorButton.setBackground(Color.RED);
+        colorButton.setBackground(DrawVar.fillColor);
         colorButton.setPreferredSize(new Dimension(50, 25));
         colorButton.addActionListener(e ->
         {
@@ -21,6 +24,7 @@ public class SubComponents
                     null, "Seleccionar color", colorButton.getBackground());
             if (newColor != null)
             {
+                DrawVar.fillColor = newColor;
                 colorButton.setBackground(newColor);
             }
         });
@@ -38,24 +42,20 @@ public class SubComponents
         // Selector de color inicial
         JPanel startColorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         startColorPanel.add(new JLabel("Color Inicial:"));
-        JButton startColorBtn = createColorButton(Color.BLACK);
+        JButton startColorBtn = new JButton();
+        startColorBtn.setBackground(DrawVar.startGradientColor);
+        startColorBtn.setPreferredSize(new Dimension(50, 25));
         startColorPanel.add(startColorBtn);
         panel.add(startColorPanel);
 
         // Selector de color final
         JPanel endColorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         endColorPanel.add(new JLabel("Color Final:"));
-        JButton endColorBtn = createColorButton(Color.BLACK);
+        JButton endColorBtn = new JButton();
+        endColorBtn.setBackground(DrawVar.endGradientColor);
+        endColorBtn.setPreferredSize(new Dimension(50, 25));
         endColorPanel.add(endColorBtn);
         panel.add(endColorPanel);
-
-        // Control de ángulo
-        JPanel anglePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        anglePanel.add(new JLabel("Ángulo (grados):"));
-        JSpinner angleSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 359, 1));
-        angleSpinner.setPreferredSize(new Dimension(60, 20));
-        anglePanel.add(angleSpinner);
-        panel.add(anglePanel);
 
         JPanel previewPanel = new JPanel()
         {
@@ -65,56 +65,49 @@ public class SubComponents
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
 
-                int angle = (int) angleSpinner.getValue();
-                double radians = Math.toRadians(angle);
-                float x2 = (float) Math.cos(radians);
-                float y2 = (float) Math.sin(radians);
-
-                // Escalar según el tamaño del panel
-                x2 *= getWidth();
-                y2 *= getHeight();
-
                 GradientPaint gradient = new GradientPaint(
                         0, 0, startColorBtn.getBackground(),
-                        x2, y2, endColorBtn.getBackground()
+                        getWidth(), getHeight(), endColorBtn.getBackground()
                 );
 
                 g2d.setPaint(gradient);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+
         previewPanel.setPreferredSize(new Dimension(200, 50));
         previewPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.add(previewPanel);
         panel.add(Box.createVerticalGlue());
 
-        // Listeners para actualizar la previsualización
-        ActionListener updateListener = e -> previewPanel.repaint();
-        startColorBtn.addActionListener(updateListener);
-        endColorBtn.addActionListener(updateListener);
-        angleSpinner.addChangeListener(e -> previewPanel.repaint());
+        UpdatePreviewPanel preview = (btn) ->
+        {
+            Color newColor = JColorChooser.showDialog(null, "Seleccionar color", endColorBtn.getBackground());
+            if (newColor != null)
+            {
+                btn.setBackground(newColor);
+                previewPanel.repaint();
+            }
+        };
+
+        startColorBtn.addActionListener(e ->
+        {
+            preview.update(startColorBtn);
+            DrawVar.startGradientColor = startColorBtn.getBackground();
+        });
+
+
+
+        endColorBtn.addActionListener(e ->
+        {
+            preview.update(endColorBtn);
+            DrawVar.endGradientColor = endColorBtn.getBackground();
+        });
 
         return panel;
     }
 
-    private static JButton createColorButton(Color initialColor)
-    {
-        JButton colorButton = new JButton();
-        colorButton.setBackground(initialColor);
-        colorButton.setPreferredSize(new Dimension(50, 25));
-        colorButton.addActionListener(e ->
-        {
-            Color newColor = JColorChooser.showDialog(
-                    null, "Seleccionar color", colorButton.getBackground());
-            if (newColor != null)
-            {
-                colorButton.setBackground(newColor);
-            }
-        });
-        return colorButton;
-    }
-
-    public static JPanel createOpacityPanel()
+    public static JPanel createTexturePanel()
     {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

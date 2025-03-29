@@ -2,7 +2,9 @@ package utils;
 
 import components.sub.CustomToggleButton;
 import components.sub.ShapeIcon;
+import utils.enums.FillType;
 import utils.enums.ShapeType;
+import utils.global.DrawVar;
 import utils.global.Global;
 import utils.interfaces.UpdateTabs;
 import utils.sub.SubComponents;
@@ -146,10 +148,10 @@ public class Components
         container.setLayout(new BorderLayout());
 
         JToggleButton[] btns = new JToggleButton[4];
-        btns[0] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Relleno texturizado");
-        btns[1] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Relleno Solido");
-        btns[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Relleno degradado");
-        btns[3] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Relleno texturizado");
+        btns[0] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Sin Relleno");
+        btns[1] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Solido");
+        btns[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Gradiante");
+        btns[3] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Texturizado");
 
         btns[1].setSelected(true);
         ButtonGroup toolGroup = new ButtonGroup();
@@ -165,14 +167,14 @@ public class Components
         JPanel empty = new JPanel();
         empty.add(new JLabel("No paint"));
         JPanel fillPanel = SubComponents.createFillPanel();
-        JPanel strokePanel = SubComponents.createGradientPanel();
-        JPanel opacityPanel = SubComponents.createOpacityPanel();
+        JPanel gradientPanel = SubComponents.createGradientPanel();
+        JPanel texturePanel = SubComponents.createTexturePanel();
 
         JPanel containerCard = new JPanel(cardLayout);
         containerCard.add(empty, "Empty");
-        containerCard.add(fillPanel, "Relleno");
-        containerCard.add(strokePanel, "Borde");
-        containerCard.add(opacityPanel, "Opacidad");
+        containerCard.add(fillPanel, "Solid");
+        containerCard.add(gradientPanel, "Gradient");
+        containerCard.add(texturePanel, "Texture");
 
         JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
         opciones.add(btns[0]);
@@ -180,12 +182,28 @@ public class Components
         opciones.add(btns[2]);
         opciones.add(btns[3]);
 
-        btns[0].addActionListener(e -> cardLayout.show(containerCard, "Empty"));
-        btns[1].addActionListener(e -> cardLayout.show(containerCard, "Relleno"));
-        btns[2].addActionListener(e -> cardLayout.show(containerCard, "Borde"));
-        btns[3].addActionListener(e -> cardLayout.show(containerCard, "Opacidad"));
+        btns[0].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Empty");
+            DrawVar.fillType = FillType.EMPTY;
+        });
+        btns[1].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Solid");
+            DrawVar.fillType = FillType.SOLID;
+        });
+        btns[2].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Gradient");
+            DrawVar.fillType = FillType.GRADIENT;
+        });
+        btns[3].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Texture");
+            DrawVar.fillType = FillType.TEXTURED;
+        });
 
-        cardLayout.show(containerCard, "Relleno");
+        cardLayout.show(containerCard, "Solid");
 
         container.add(opciones, BorderLayout.NORTH);
         container.add(containerCard, BorderLayout.CENTER);
