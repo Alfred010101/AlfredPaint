@@ -2,6 +2,7 @@ package utils;
 
 import components.sub.CustomToggleButton;
 import components.sub.ShapeIcon;
+import utils.interfaces.UpdateTabs;
 
 import javax.swing.*;
 
@@ -46,15 +47,77 @@ public class Components
         return buttons;
     }
 
-    public static void addViewMenu(JMenuBar menuBar)
+    public static void addFileMenu(JMenuBar menuBar)
+    {
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+    }
+
+    public static void addEditMenu(JMenuBar menuBar)
+    {
+        JMenu editMenu = new JMenu("Edit");
+        menuBar.add(editMenu);
+    }
+
+    public static void addViewMenu(JMenuBar menuBar, UpdateTabs update)
     {
         JMenu viewMenu = new JMenu("View");
-        for (int i = 0; i < Const.TAB_NAMES.length; i++) {
+        for (int i = 0; i < Const.TAB_NAMES.length; i++)
+        {
             JCheckBoxMenuItem checkBoxItem = new JCheckBoxMenuItem(Const.TAB_NAMES[i], Const.tabVisibility[i]);
             int tabIndex = i;
-//            checkBoxItem.addActionListener(e -> toggleTabVisibility(tabIndex, checkBoxItem.isSelected()));
+            checkBoxItem.addActionListener(e ->
+            {
+                Const.tabVisibility[tabIndex] = checkBoxItem.isSelected();
+                update.updateTabs();
+            });
+
+            if (i == Const.TAB_NAMES.length - 1 || i == Const.TAB_NAMES.length - 2 )
+            {
+                checkBoxItem.setEnabled(false);
+            }
+
             viewMenu.add(checkBoxItem);
         }
         menuBar.add(viewMenu);
+    }
+
+    public static JScrollPane initJSplit(JPanel left, JPanel right)
+    {
+        JPanel containerShapes = new JPanel();
+        containerShapes.setLayout(new BoxLayout(containerShapes, BoxLayout.Y_AXIS));
+        containerShapes.add(left);
+        containerShapes.add(right);
+        containerShapes.add(Box.createVerticalGlue());
+
+        JScrollPane scrollPane = new JScrollPane(containerShapes);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        return scrollPane;
+    }
+
+    public static JPanel initFillPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.add(new JButton("Algo"));
+        panel.add(new JTextField(60));
+        return  panel;
+    }
+
+    public static JPanel initStrokeStylePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.add(new JButton("Algo"));
+        panel.add(new JTextField());
+        return  panel;
+    }
+
+    public static JPanel initStrokePaintPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.add(new JButton("Algo"));
+        panel.add(new JTextField(20));
+        return  panel;
     }
 }

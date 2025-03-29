@@ -2,10 +2,10 @@ import components.ShapesPanel;
 import components.SplitPanel;
 import utils.Components;
 import utils.Const;
+import utils.interfaces.UpdateTabs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
 
 public class PaintApp extends JFrame
 {
@@ -15,6 +15,9 @@ public class PaintApp extends JFrame
     private ButtonGroup toolGroup;
 
     private JMenuBar menuBar;
+
+    private JTabbedPane propertiesTabbed;
+    private JPanel[] propertiesPanels;
 
     public PaintApp()
     {
@@ -34,44 +37,59 @@ public class PaintApp extends JFrame
         javaShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
         myShapes = new ShapesPanel(Components.createTogglesShapes(toolGroup));
 
+        initJTabbed();
         initJMenu();
         initJSplit();
 
         setJMenuBar(menuBar);
         add(splitPane, BorderLayout.CENTER);
+        add(propertiesTabbed, BorderLayout.EAST);
     }
 
     private void initJMenu()
     {
         menuBar = new JMenuBar();
-        Components.addViewMenu(menuBar);
+        Components.addFileMenu(menuBar);
+        Components.addEditMenu(menuBar);
+        Components.addViewMenu(menuBar, updateTabs());
     }
 
     private void initJSplit()
     {
-        JPanel containerShapes = new JPanel();
-        containerShapes.setLayout(new BoxLayout(containerShapes, BoxLayout.Y_AXIS));
-        containerShapes.add(javaShapes);
-        containerShapes.add(myShapes);
-        containerShapes.add(Box.createVerticalGlue());
+        JScrollPane scrollPane = Components.initJSplit(javaShapes,myShapes);
+        splitPane = new SplitPanel(scrollPane, new JPanel());
+    }
 
-        JScrollPane scrollPane = new JScrollPane(containerShapes);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    private void initJTabbed()
+    {
+        propertiesTabbed = new JTabbedPane();
+        propertiesPanels = new JPanel[3];
+        propertiesPanels[0] = Components.initFillPanel();
+        propertiesPanels[1] = Components.initStrokePaintPanel();
+        propertiesPanels[2] = Components.initStrokeStylePanel();
+    }
 
-        JSplitPane splitInternal = new SplitPanel(scrollPane, new JPanel(), true);
-        splitPane = new SplitPanel(splitInternal, new JPanel(), false);
-
-        addComponentListener(new ComponentAdapter()
+    private UpdateTabs updateTabs()
+    {
+        return new UpdateTabs()
         {
             @Override
-            public void componentResized(java.awt.event.ComponentEvent evt)
+            public void updateTabs()
             {
-                int nuevaPosicion = splitPane.getWidth() - 240;
-                splitPane.setDividerLocation(nuevaPosicion);
+                boolean isEmpty = true;
+                propertiesTabbed.removeAll();
+                for (int i = 0; i < Const.TAB_NAMES.length; i++)
+                {
+                    //aqui va dar error si entra a la opc deshabilitada
+                    if (Const.tabVisibility[i])
+                    {
+                        isEmpty = false;
+                        propertiesTabbed.addTab(Const.TAB_NAMES[i], propertiesPanels[i]);
+                    }
+                }
+                propertiesTabbed.setVisible(!isEmpty);
             }
-        });
+        };
     }
 
     public static void main(String[] args)
