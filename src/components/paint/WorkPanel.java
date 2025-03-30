@@ -1,10 +1,10 @@
 package components.paint;
 
 import model.MyShape;
-import utils.enums.FillType;
 import utils.enums.ShapeType;
-import utils.enums.StrokeFill;
-import utils.global.DrawVar;
+import utils.enums.StrokeType;
+import utils.global.DrawMethods;
+import utils.global.DrawVars;
 import utils.global.Global;
 
 import javax.swing.*;
@@ -35,21 +35,21 @@ public class WorkPanel extends JPanel
             g2.draw(shape.getShape());
         }
 
-        if (Global.ACTIVE_MODE instanceof ShapeType && DrawVar.partialShape != null)
+        if (Global.ACTIVE_MODE instanceof ShapeType && Global.partialShape != null)
         {
-            GradientPaint gradient = Draw.getGradient();
+            GradientPaint gradient = DrawMethods.getGradient();
 
             if(gradient != null)
             {
                 g2.setPaint(gradient);
-                g2.fill(DrawVar.partialShape);
+                g2.fill(Global.partialShape);
             }
 
-            if(DrawVar.strokeFillType != StrokeFill.EMPTY)
+            if(DrawVars.strokeType != StrokeType.EMPTY)
             {
-                g2.setColor(DrawVar.strokeColor);
-                g2.setStroke(DrawVar.strokeDraw);
-                g2.draw(DrawVar.partialShape);
+                g2.setColor(DrawVars.strokeColor);
+                g2.setStroke(DrawVars.strokeDraw);
+                g2.draw(Global.partialShape);
             }
         }
     }

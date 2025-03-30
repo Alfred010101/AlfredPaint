@@ -2,15 +2,12 @@ package components.paint;
 
 
 import utils.enums.ShapeType;
-import utils.global.DrawVar;
-import utils.global.GV;
+import utils.global.DrawMethods;
 import utils.global.Global;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.*;
 
 public class MouseMotionEvenetHandler implements MouseMotionListener
 {
@@ -25,10 +22,10 @@ public class MouseMotionEvenetHandler implements MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        DrawVar.pointDragged = e.getPoint();
+        Global.pointDragged = e.getPoint();
         if(Global.ACTIVE_MODE instanceof ShapeType shape)
         {
-            Draw.drawRealTime(shape);
+            DrawMethods.drawRealTime(shape);
             panel.repaint();
         }
     }

@@ -1,15 +1,16 @@
-package utils;
+package components;
 
 import components.sub.CustomToggleButton;
 import components.sub.MyIcon;
+import utils.global.Const;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
-import utils.enums.StrokeFill;
-import utils.global.DrawVar;
+import utils.enums.StrokeType;
+import utils.global.DrawVars;
 import utils.global.Global;
 import utils.interfaces.UpdateTabs;
-import utils.sub.StrokePanel;
-import utils.sub.SubComponents;
+import components.sub.StrokePanel;
+import components.sub.SubComponents;
 
 import javax.swing.*;
 import java.awt.*;
@@ -186,22 +187,22 @@ public class Components
         btns[0].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Empty");
-            DrawVar.fillType = FillType.EMPTY;
+            DrawVars.fillType = FillType.EMPTY;
         });
         btns[1].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Solid");
-            DrawVar.fillType = FillType.SOLID;
+            DrawVars.fillType = FillType.SOLID;
         });
         btns[2].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Gradient");
-            DrawVar.fillType = FillType.GRADIENT;
+            DrawVars.fillType = FillType.GRADIENT;
         });
         btns[3].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Texture");
-            DrawVar.fillType = FillType.TEXTURED;
+            DrawVars.fillType = FillType.TEXTURED;
         });
 
         cardLayout.show(containerCard, "Solid");
@@ -219,8 +220,8 @@ public class Components
         container.setLayout(new BorderLayout());
 
         JToggleButton[] btns = new JToggleButton[2];
-        btns[0] = new CustomToggleButton(new MyIcon(StrokeFill.EMPTY), "Sin Relleno");
-        btns[1] = new CustomToggleButton(new MyIcon(StrokeFill.SOLID), "Solido");
+        btns[0] = new CustomToggleButton(new MyIcon(StrokeType.EMPTY), "Sin Relleno");
+        btns[1] = new CustomToggleButton(new MyIcon(StrokeType.SOLID), "Solido");
 
         btns[1].setSelected(true);
         ButtonGroup toolGroup = new ButtonGroup();
@@ -243,12 +244,12 @@ public class Components
         btns[0].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Empty");
-            DrawVar.strokeFillType = StrokeFill.EMPTY;
+            DrawVars.strokeType = StrokeType.EMPTY;
         });
         btns[1].addActionListener(e ->
         {
             cardLayout.show(containerCard, "Solid");
-            DrawVar.strokeFillType = StrokeFill.SOLID;
+            DrawVars.strokeType = StrokeType.SOLID;
         });
 
         cardLayout.show(containerCard, "Solid");

@@ -1,9 +1,9 @@
 package components.sub;
 
-import components.paint.Draw;
+import utils.global.DrawMethods;
 import components.paint.Shapes;
 import utils.enums.*;
-import utils.global.DrawVar;
+import utils.global.DrawVars;
 import utils.interfaces.UnionIcons;
 
 import javax.swing.*;
@@ -119,12 +119,12 @@ public class MyIcon implements Icon
                 }
                 case SOLID ->
                 {
-                    g2.setColor(DrawVar.fillColor);
+                    g2.setColor(DrawVars.fillColor);
                     g2.fill(shape);
                 }
                 case GRADIENT ->
                 {
-                    g2.setPaint(Draw.getGradient(shape, DrawVar.startGradientColor, DrawVar.endGradientColor, false));
+                    g2.setPaint(DrawMethods.getGradient(shape, DrawVars.startGradientColor, DrawVars.endGradientColor, false));
                     g2.fill(shape);
                 }
                 case TEXTURED ->
@@ -159,7 +159,7 @@ public class MyIcon implements Icon
             p.addPoint(x + 10, y + 2);
             p.addPoint(x + 20, y + 18);
             g2.drawPolyline(p.xpoints, p.ypoints, p.npoints);
-        } else if (type instanceof StrokeFill icon)
+        } else if (type instanceof StrokeType icon)
         {
             Shape shape = new Rectangle.Float(x + padding - 3, y + padding - 3, width + 6, height + 6);
 
@@ -172,7 +172,7 @@ public class MyIcon implements Icon
                 }
                 case SOLID ->
                 {
-                    g2.setColor(DrawVar.strokeColor);
+                    g2.setColor(DrawVars.strokeColor);
                     g2.fill(shape);
                 }
             }

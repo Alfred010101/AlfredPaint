@@ -1,8 +1,8 @@
 package model;
 
-import model.fillColor.GradientColor;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
+import utils.enums.StrokeType;
 import utils.enums.StrokeStyle;
 import utils.interfaces.ColorStyle;
 
@@ -10,29 +10,40 @@ import java.awt.*;
 
 public class MyShape
 {
-    private String name;
-    private Point position;
-    private int width;
-    private int height;
-    private FillType fillType;
-    private StrokeStyle strokeStyle;
-    private ColorStyle fillColor;
-    private Color strokeColor;
-    private double strokeWidth;
-    private ShapeType type;
+    //typo de shape
+    private ShapeType shapeType;
+    //shape implementada
     private Shape shape;
+    //tipo de relleno EMPTY, SOLID, GRADIENT, TEXTURED
+    private FillType fillType;
+    //color de relleno
+    private ColorStyle fillColor;
+    //tipo de relleno para el stroke EMPTY, SOLID
+    private StrokeType strokeType;
+    //color del stroke
+    private Color strokeColor;
+    //stroke implementado
+    private BasicStroke stroke;
 
-    public MyShape(String name, ShapeType type, Point position, int width, int height)
+    public MyShape(ShapeType shapeType, Shape Shape, FillType fillType, ColorStyle fillColor, StrokeType strokeType, Color strokeColor, BasicStroke stroke)
     {
-        this.name = name;
-        this.type = type;
-        this.position = position;
-        this.width = width;
-        this.height = height;
-        // Valores por defecto
-        this.fillType = FillType.SOLID;
-        this.strokeStyle = StrokeStyle.SOLID;
-        this.strokeWidth = 1.0;
+        this.shapeType = shapeType;
+        this.shape = shape;
+        this.fillType = fillType;
+        this.fillColor = fillColor;
+        this.strokeType = strokeType;
+        this.strokeColor = strokeColor;
+        this.stroke = stroke;
+    }
+
+    public ShapeType getShapeType()
+    {
+        return shapeType;
+    }
+
+    public void setShapeType(ShapeType shapeType)
+    {
+        this.shapeType = shapeType;
     }
 
     public Shape getShape()
@@ -45,41 +56,60 @@ public class MyShape
         this.shape = shape;
     }
 
-    // Getters y setters para todas las propiedades
-    public void setFill(FillType type, ColorStyle color)
+    public FillType getFillType()
+    {
+        return fillType;
+    }
+
+    public void setFillType(FillType fillType)
+    {
+        this.fillType = fillType;
+    }
+
+    public ColorStyle getFillColor()
+    {
+        return fillColor;
+    }
+
+    public void setFillColor(ColorStyle fillColor)
+    {
+        this.fillColor = fillColor;
+    }
+
+    public StrokeType getStrokeType()
+    {
+        return strokeType;
+    }
+
+    public void setStrokeType(StrokeType strokeType)
+    {
+        this.strokeType = strokeType;
+    }
+
+    public Color getStrokeColor()
+    {
+        return strokeColor;
+    }
+
+    public void setStrokeColor(Color strokeColor)
+    {
+        this.strokeColor = strokeColor;
+    }
+
+    public BasicStroke getStroke()
+    {
+        return stroke;
+    }
+
+    public void setStroke(BasicStroke stroke)
+    {
+        this.stroke = stroke;
+    }
+
+    // Metodos bajo demanda
+    public void setFillShape(FillType type, ColorStyle color)
     {
         this.fillType = type;
         this.fillColor = color;
-    }
-
-    public void setStroke(Color color, StrokeStyle style, double width)
-    {
-        this.strokeColor = color;
-        this.strokeStyle = style;
-        this.strokeWidth = width;
-    }
-
-    // Otros métodos útiles
-    public void move(int deltaX, int deltaY)
-    {
-        this.position = new Point(
-                this.position.x + deltaX,
-                this.position.y + deltaY
-        );
-    }
-
-    public void resize(double scale)
-    {
-        this.width *= scale;
-        this.height *= scale;
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format(
-                "Shape[name=%s, position=(%.1f,%.1f), size=%.1fx%.1f, fill=%s]",
-                name, position.getX(), position.getY(), width, height, fillType
-        );
     }
 }

@@ -2,7 +2,7 @@ package utils.enums;
 
 import utils.interfaces.UnionIcons;
 
-public enum StrokeFill implements UnionIcons
+public enum StrokeType implements UnionIcons
 {
     EMPTY,
     SOLID

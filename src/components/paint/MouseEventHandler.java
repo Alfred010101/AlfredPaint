@@ -1,13 +1,10 @@
 package components.paint;
 
-import utils.global.DrawVar;
-import utils.global.GV;
+import utils.global.Global;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.*;
 
 public class MouseEventHandler implements MouseListener
 {
@@ -37,7 +34,7 @@ public class MouseEventHandler implements MouseListener
     @Override
     public void mousePressed(MouseEvent e)
     {
-        DrawVar.pointPressed = e.getPoint();
+        Global.pointPressed = e.getPoint();
 
     }
 

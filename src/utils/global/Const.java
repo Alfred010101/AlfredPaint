@@ -1,4 +1,4 @@
-package utils;
+package utils.global;
 
 public class Const
 {

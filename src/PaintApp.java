@@ -2,8 +2,8 @@ import components.ShapesPanel;
 import components.SplitPanel;
 import components.ToolsPanel;
 import components.paint.WorkPanel;
-import utils.Components;
-import utils.Const;
+import components.Components;
+import utils.global.Const;
 import utils.interfaces.UpdateTabs;
 
 import javax.swing.*;

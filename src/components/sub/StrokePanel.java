@@ -1,11 +1,8 @@
-package utils.sub;
+package components.sub;
 
-import components.sub.CustomToggleButton;
-import components.sub.MyIcon;
-import test.AdvancedStrokeConfigPanel;
 import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
-import utils.global.DrawVar;
+import utils.global.DrawVars;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +29,7 @@ public class StrokePanel extends JPanel
         colorPanel.add(new JLabel("Color:"));
 
         JButton colorButton = new JButton();
-        colorButton.setBackground(DrawVar.strokeColor);
+        colorButton.setBackground(DrawVars.strokeColor);
         colorButton.setPreferredSize(new Dimension(50, 25));
         colorButton.addActionListener(e ->
         {
@@ -40,7 +37,7 @@ public class StrokePanel extends JPanel
                     null, "Select color", colorButton.getBackground());
             if (newColor != null)
             {
-                DrawVar.strokeColor = newColor;
+                DrawVars.strokeColor = newColor;
                 colorButton.setBackground(newColor);
             }
         });
@@ -200,7 +197,7 @@ public class StrokePanel extends JPanel
 
     private void updateStroke()
     {
-            DrawVar.strokeDraw = (dashPattern != null) ?
+            DrawVars.strokeDraw = (dashPattern != null) ?
                     new BasicStroke(currentWidth, capType, joinType, 1.0f, dashPattern, 0.0f) :
                     new BasicStroke(currentWidth, capType, joinType);
     }

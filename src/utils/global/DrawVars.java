@@ -1,18 +1,12 @@
 package utils.global;
 
 import utils.enums.FillType;
-import utils.enums.StrokeFill;
+import utils.enums.StrokeType;
 
 import java.awt.*;
 
-public class DrawVar
+public class DrawVars
 {
-    //puede ser local?
-    public static Shape partialShape = null;
-
-    public static Point pointPressed = new Point();
-    public static Point pointReleased = new Point();
-    public static Point pointDragged = new Point();
 
     public static FillType fillType = FillType.SOLID;
 
@@ -40,6 +34,6 @@ public class DrawVar
             (int) (Math.random() * 255) + 0
     );
 
-    public static StrokeFill strokeFillType = StrokeFill.SOLID;
+    public static StrokeType strokeType = StrokeType.SOLID;
     public static BasicStroke strokeDraw = new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
 }
