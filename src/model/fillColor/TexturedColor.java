@@ -1,8 +1,8 @@
 package model.fillColor;
 
-import utils.interfaces.ColorStyle;
+import utils.interfaces.ColorFill;
 
-public class TexturedColor implements ColorStyle
+public class TexturedColor implements ColorFill
 {
     private String textureName;
     private double scale;

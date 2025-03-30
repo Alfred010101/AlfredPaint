@@ -1,5 +1,5 @@
 package utils.interfaces;
 
-public interface ColorStyle
+public interface UnionModes
 {
 }

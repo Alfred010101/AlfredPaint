@@ -1,6 +1,10 @@
 package components.paint;
 
 import model.MyShape;
+import model.fillColor.GradientColor;
+import model.fillColor.SolidColor;
+import utils.enums.FillType;
+import utils.enums.Mode;
 import utils.enums.ShapeType;
 import utils.enums.StrokeType;
 import utils.global.DrawMethods;
@@ -32,7 +36,27 @@ public class WorkPanel extends JPanel
 
         for (MyShape shape : Global.shapes)
         {
-            g2.draw(shape.getShape());
+            if (shape.getFillType() != FillType.EMPTY && shape.getFillType() != FillType.TEXTURED)
+            {
+                GradientPaint gradient = DrawMethods.getGradient(shape);
+                g2.setPaint(gradient);
+                g2.fill(shape.getShape());
+            }
+            if (shape.getStrokeType() != StrokeType.EMPTY)
+            {
+                g2.setColor(shape.getStrokeColor());
+                g2.setStroke(shape.getStroke());
+                g2.draw(shape.getShape());
+            }
+        }
+
+        if(Global.ACTIVE_MODE instanceof Mode mode)
+        {
+            if(!Global.selectedShape.isEmty())
+            {
+                Rectangle dim = Global.selectedShape.getMyShape().getShape().getBounds();
+                g2.drawRect(dim.x, dim.y, dim.width, dim.height);
+            }
         }
 
         if (Global.ACTIVE_MODE instanceof ShapeType && Global.partialShape != null)

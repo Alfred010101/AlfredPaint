@@ -1,9 +1,9 @@
 package utils.enums;
 
 import utils.interfaces.UnionIcons;
-import utils.interfaces.UnionType;
+import utils.interfaces.UnionModes;
 
-public enum Mode implements UnionType, UnionIcons
+public enum Mode implements UnionModes, UnionIcons
 {
     DRAW_MODE,
     SELECT_ONE,

@@ -1,5 +1,5 @@
 package utils.interfaces;
 
-public interface UnionType
+public interface ColorFill
 {
 }

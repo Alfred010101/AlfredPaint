@@ -1,7 +1,7 @@
 package components.sub;
 
 import utils.global.DrawMethods;
-import components.paint.Shapes;
+import utils.shapes.Shapes;
 import utils.enums.*;
 import utils.global.DrawVars;
 import utils.interfaces.UnionIcons;

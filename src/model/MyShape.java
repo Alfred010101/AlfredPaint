@@ -3,8 +3,7 @@ package model;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
 import utils.enums.StrokeType;
-import utils.enums.StrokeStyle;
-import utils.interfaces.ColorStyle;
+import utils.interfaces.ColorFill;
 
 import java.awt.*;
 
@@ -17,7 +16,7 @@ public class MyShape
     //tipo de relleno EMPTY, SOLID, GRADIENT, TEXTURED
     private FillType fillType;
     //color de relleno
-    private ColorStyle fillColor;
+    private ColorFill fillColor;
     //tipo de relleno para el stroke EMPTY, SOLID
     private StrokeType strokeType;
     //color del stroke
@@ -25,7 +24,7 @@ public class MyShape
     //stroke implementado
     private BasicStroke stroke;
 
-    public MyShape(ShapeType shapeType, Shape Shape, FillType fillType, ColorStyle fillColor, StrokeType strokeType, Color strokeColor, BasicStroke stroke)
+    public MyShape(ShapeType shapeType, Shape shape, FillType fillType, ColorFill fillColor, StrokeType strokeType, Color strokeColor, BasicStroke stroke)
     {
         this.shapeType = shapeType;
         this.shape = shape;
@@ -66,12 +65,12 @@ public class MyShape
         this.fillType = fillType;
     }
 
-    public ColorStyle getFillColor()
+    public ColorFill getFillColor()
     {
         return fillColor;
     }
 
-    public void setFillColor(ColorStyle fillColor)
+    public void setFillColor(ColorFill fillColor)
     {
         this.fillColor = fillColor;
     }
@@ -107,7 +106,7 @@ public class MyShape
     }
 
     // Metodos bajo demanda
-    public void setFillShape(FillType type, ColorStyle color)
+    public void setFillShape(FillType type, ColorFill color)
     {
         this.fillType = type;
         this.fillColor = color;

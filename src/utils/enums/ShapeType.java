@@ -1,9 +1,9 @@
 package utils.enums;
 
 import utils.interfaces.UnionIcons;
-import utils.interfaces.UnionType;
+import utils.interfaces.UnionModes;
 
-public enum ShapeType implements UnionType, UnionIcons
+public enum ShapeType implements UnionModes, UnionIcons
 {
     LINE,
     RECTANGLE,

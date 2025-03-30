@@ -1,6 +1,9 @@
 package utils.global;
 
-import components.paint.Shapes;
+import model.MyShape;
+import model.fillColor.GradientColor;
+import model.fillColor.SolidColor;
+import utils.shapes.Shapes;
 import utils.enums.ShapeType;
 
 import java.awt.*;
@@ -79,5 +82,27 @@ public class DrawMethods
                 end,
                 cyclic
         );
+    }
+
+    public static GradientPaint getGradient(MyShape shape)
+    {
+        return switch (shape.getFillType())
+        {
+            case SOLID ->
+                    DrawMethods.getGradient(
+                            shape.getShape(),
+                            ((SolidColor)shape.getFillColor()).getColor(),
+                            ((SolidColor)shape.getFillColor()).getColor(),
+                            false
+                    );
+            case GRADIENT ->
+                    DrawMethods.getGradient(
+                            shape.getShape(),
+                            ((GradientColor)shape.getFillColor()).getStartColor(),
+                            ((GradientColor)shape.getFillColor()).getEndColor(),
+                            false
+                    );
+            default -> null;
+        };
     }
 }

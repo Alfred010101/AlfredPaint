@@ -1,4 +1,4 @@
-package components.paint;
+package utils.shapes;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

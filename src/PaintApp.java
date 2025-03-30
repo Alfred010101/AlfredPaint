@@ -4,6 +4,7 @@ import components.ToolsPanel;
 import components.paint.WorkPanel;
 import components.Components;
 import utils.global.Const;
+import utils.global.SwingVar;
 import utils.interfaces.UpdateTabs;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class PaintApp extends JFrame
 
     private ButtonGroup toolGroup;
 
-    private JTabbedPane propertiesTabbed;
+    //private JTabbedPane propertiesTabbed;
     private JPanel[] propertiesPanels;
 
     public PaintApp()
@@ -50,7 +51,7 @@ public class PaintApp extends JFrame
         setJMenuBar(menuBar);
         add(toolsPanel, BorderLayout.NORTH);
         add(splitPane, BorderLayout.CENTER);
-        add(propertiesTabbed, BorderLayout.EAST);
+        add(SwingVar.propertiesTabbed, BorderLayout.EAST);
     }
 
     private void initJMenu()
@@ -79,7 +80,7 @@ public class PaintApp extends JFrame
 
     private void initJTabbed()
     {
-        propertiesTabbed = new JTabbedPane();
+        SwingVar.propertiesTabbed = new JTabbedPane();
         propertiesPanels = new JPanel[2];
         propertiesPanels[0] = Components.initFillPanel();
         propertiesPanels[1] = Components.initStrokePanel();
@@ -93,17 +94,17 @@ public class PaintApp extends JFrame
             public void updateTabs()
             {
                 boolean isEmpty = true;
-                propertiesTabbed.removeAll();
+                SwingVar.propertiesTabbed.removeAll();
                 for (int i = 0; i < Const.TAB_NAMES.length; i++)
                 {
                     //aqui va dar error si entra a la opc deshabilitada
                     if (Const.tabVisibility[i])
                     {
                         isEmpty = false;
-                        propertiesTabbed.addTab(Const.TAB_NAMES[i], propertiesPanels[i]);
+                        SwingVar.propertiesTabbed.addTab(Const.TAB_NAMES[i], propertiesPanels[i]);
                     }
                 }
-                propertiesTabbed.setVisible(!isEmpty);
+                SwingVar.propertiesTabbed.setVisible(!isEmpty);
             }
         };
     }
