@@ -80,10 +80,9 @@ public class PaintApp extends JFrame
     private void initJTabbed()
     {
         propertiesTabbed = new JTabbedPane();
-        propertiesPanels = new JPanel[3];
+        propertiesPanels = new JPanel[2];
         propertiesPanels[0] = Components.initFillPanel();
-        propertiesPanels[1] = Components.initStrokePaintPanel();
-        propertiesPanels[2] = Components.initStrokeStylePanel();
+        propertiesPanels[1] = Components.initStrokePanel();
     }
 
     private UpdateTabs updateTabs()

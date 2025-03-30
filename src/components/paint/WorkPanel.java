@@ -3,6 +3,7 @@ package components.paint;
 import model.MyShape;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
+import utils.enums.StrokeFill;
 import utils.global.DrawVar;
 import utils.global.Global;
 
@@ -43,8 +44,13 @@ public class WorkPanel extends JPanel
                 g2.setPaint(gradient);
                 g2.fill(DrawVar.partialShape);
             }
-            g2.setColor(DrawVar.strokeColor);
-            g2.draw(DrawVar.partialShape);
+
+            if(DrawVar.strokeFillType != StrokeFill.EMPTY)
+            {
+                g2.setColor(DrawVar.strokeColor);
+                g2.setStroke(DrawVar.strokeDraw);
+                g2.draw(DrawVar.partialShape);
+            }
         }
     }
 }

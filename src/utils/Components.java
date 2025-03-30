@@ -4,9 +4,11 @@ import components.sub.CustomToggleButton;
 import components.sub.MyIcon;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
+import utils.enums.StrokeFill;
 import utils.global.DrawVar;
 import utils.global.Global;
 import utils.interfaces.UpdateTabs;
+import utils.sub.StrokePanel;
 import utils.sub.SubComponents;
 
 import javax.swing.*;
@@ -165,7 +167,9 @@ public class Components
         empty.add(new JLabel("No paint"));
         JPanel fillPanel = SubComponents.createFillPanel();
         JPanel gradientPanel = SubComponents.createGradientPanel();
-        JPanel texturePanel = SubComponents.createTexturePanel();
+        //JPanel texturePanel = SubComponents.createTexturePanel();
+        JPanel texturePanel = new JPanel();
+        texturePanel.add(new JLabel("En espera de implementar"));
 
         JPanel containerCard = new JPanel(cardLayout);
         containerCard.add(empty, "Empty");
@@ -207,19 +211,50 @@ public class Components
         return container;
     }
 
-    public static JPanel initStrokeStylePanel()
+    public static JPanel initStrokePanel()
     {
-        JPanel panel = new JPanel();
-        panel.add(new JButton("Algo"));
-        panel.add(new JTextField());
-        return  panel;
-    }
+        CardLayout cardLayout = new CardLayout();
+        JPanel container = new JPanel();
 
-    public static JPanel initStrokePaintPanel()
-    {
-        JPanel panel = new JPanel();
-        panel.add(new JButton("Algo"));
-        panel.add(new JTextField(20));
-        return  panel;
+        container.setLayout(new BorderLayout());
+
+        JToggleButton[] btns = new JToggleButton[2];
+        btns[0] = new CustomToggleButton(new MyIcon(StrokeFill.EMPTY), "Sin Relleno");
+        btns[1] = new CustomToggleButton(new MyIcon(StrokeFill.SOLID), "Solido");
+
+        btns[1].setSelected(true);
+        ButtonGroup toolGroup = new ButtonGroup();
+
+        toolGroup.add(btns[0]);
+        toolGroup.add(btns[1]);
+
+        JPanel empty = new JPanel();
+        empty.add(new JLabel("No paint"));
+        JPanel strokePanel = new StrokePanel();
+
+        JPanel containerCard = new JPanel(cardLayout);
+        containerCard.add(empty, "Empty");
+        containerCard.add(strokePanel, "Solid");
+
+        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        opciones.add(btns[0]);
+        opciones.add(btns[1]);
+
+        btns[0].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Empty");
+            DrawVar.strokeFillType = StrokeFill.EMPTY;
+        });
+        btns[1].addActionListener(e ->
+        {
+            cardLayout.show(containerCard, "Solid");
+            DrawVar.strokeFillType = StrokeFill.SOLID;
+        });
+
+        cardLayout.show(containerCard, "Solid");
+
+        container.add(opciones, BorderLayout.NORTH);
+        container.add(containerCard, BorderLayout.CENTER);
+        return container;
     }
 }

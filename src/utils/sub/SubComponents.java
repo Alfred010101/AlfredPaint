@@ -21,7 +21,7 @@ public class SubComponents
         colorButton.addActionListener(e ->
         {
             Color newColor = JColorChooser.showDialog(
-                    null, "Seleccionar color", colorButton.getBackground());
+                    null, "Select color", colorButton.getBackground());
             if (newColor != null)
             {
                 DrawVar.fillColor = newColor;
@@ -130,6 +130,31 @@ public class SubComponents
         blendPanel.add(blendMode);
         panel.add(blendPanel);
 
+        return panel;
+    }
+
+    public static JPanel createStrokePanel()
+    {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.add(new JLabel("Color:"));
+
+        JButton colorButton = new JButton();
+        colorButton.setBackground(DrawVar.fillColor);
+        colorButton.setPreferredSize(new Dimension(50, 25));
+        colorButton.addActionListener(e ->
+        {
+            Color newColor = JColorChooser.showDialog(
+                    null, "Select color", colorButton.getBackground());
+            if (newColor != null)
+            {
+                DrawVar.fillColor = newColor;
+                colorButton.setBackground(newColor);
+            }
+        });
+        StrokePanel strokeStype = new StrokePanel();
+        panel.add(colorButton);
+        panel.add(strokeStype);
         return panel;
     }
 }

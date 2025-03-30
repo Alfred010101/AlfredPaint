@@ -2,9 +2,7 @@ package components.sub;
 
 import components.paint.Draw;
 import components.paint.Shapes;
-import utils.enums.FillType;
-import utils.enums.Mode;
-import utils.enums.ShapeType;
+import utils.enums.*;
 import utils.global.DrawVar;
 import utils.interfaces.UnionIcons;
 
@@ -133,6 +131,49 @@ public class MyIcon implements Icon
                 {
                     //g2.drawLine(x + padding, y + padding, x + SIZE - padding, y + SIZE - padding);
                     g2.drawLine(x + SIZE - padding, y + padding, x + padding, y + SIZE - padding);
+                }
+            }
+        } else if (type instanceof StrokeCap icon)
+        {
+            int capType = switch (icon)
+            {
+                case CAP_BUTT -> 0;
+                case CAP_ROUND -> 1;
+                case CAP_SQUARE -> 2;
+            };
+            g2.setStroke(new BasicStroke(5, capType, BasicStroke.JOIN_MITER));
+            g2.drawLine(x, y + 10, x + 20, y + 10);
+
+        }else if (type instanceof StrokeJoin icon)
+        {
+            int joinType = switch (icon)
+            {
+                case JOIN_MITER -> 0;
+                case JOIN_ROUND -> 1;
+                case JOIN_BEVEL -> 2;
+            };
+            g2.setStroke(new BasicStroke(5, BasicStroke.CAP_BUTT, joinType));
+            // Dibujar esquina
+            Polygon p = new Polygon();
+            p.addPoint(x, y + 18);
+            p.addPoint(x + 10, y + 2);
+            p.addPoint(x + 20, y + 18);
+            g2.drawPolyline(p.xpoints, p.ypoints, p.npoints);
+        } else if (type instanceof StrokeFill icon)
+        {
+            Shape shape = new Rectangle.Float(x + padding - 3, y + padding - 3, width + 6, height + 6);
+
+            switch (icon)
+            {
+                case EMPTY ->
+                {
+                    g2.drawLine(x + padding, y + padding, x + SIZE - padding, y + SIZE - padding);
+                    g2.drawLine(x + SIZE - padding, y + padding, x + padding, y + SIZE - padding);
+                }
+                case SOLID ->
+                {
+                    g2.setColor(DrawVar.strokeColor);
+                    g2.fill(shape);
                 }
             }
         }
