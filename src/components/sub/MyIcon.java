@@ -48,6 +48,7 @@ public class MyIcon implements Icon
                 case ESTRELLA -> g2.draw(Shapes.estrella(x + padding, y + padding, width, height));
                 case LUNA -> g2.draw(Shapes.luna(x + padding, y + padding, width, height));
                 case ESPADA -> g2.draw(Shapes.espada(x + padding, y + padding, width, height));
+                case CUBO -> g2.draw(Shapes.cubo(x + padding, y + padding, width, height));
                 case LETRAE -> g2.draw(Shapes.letraE(x + padding, y + padding, width, height));
                 case PIRAMIDE -> g2.draw(Shapes.piramide(x + padding, y + padding, width, height));
                 case TORRE -> g2.draw(Shapes.torreE(x + padding, y + padding, width, height));

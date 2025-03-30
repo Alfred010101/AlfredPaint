@@ -75,6 +75,33 @@ public class Shapes
         return espada;
     }
 
+    public static Shape cubo(int x, int y, int width, int height) {
+        GeneralPath cubo = new GeneralPath();
+
+        // Cara frontal (base)
+        cubo.moveTo(x, y + height);
+        cubo.lineTo(x + (int)(width * 0.8), y + height);
+        cubo.lineTo(x + (int)(width * 0.8), y + (int)(height * 0.2));
+        cubo.lineTo(x, y + (int)(height * 0.2));
+        cubo.closePath();  // Cierra la cara frontal
+
+        // Cara superior
+        cubo.moveTo(x, y + (int)(height * 0.2));
+        cubo.lineTo(x + (int)(width * 0.2), y);
+        cubo.lineTo(x + width, y);
+        cubo.lineTo(x + (int)(width * 0.8), y + (int)(height * 0.2));
+        cubo.closePath();  // Cierra la cara superior
+
+        // Cara lateral
+        cubo.moveTo(x + (int)(width * 0.8), y + height);
+        cubo.lineTo(x + width, y + (int)(height * 0.8));
+        cubo.lineTo(x + width, y);
+        cubo.lineTo(x + (int)(width * 0.8), y + (int)(height * 0.2));
+        cubo.closePath();  // Cierra la cara lateral
+
+        return cubo;
+    }
+
     public static Shape piramide(int x, int y, int width, int height)
     {
 

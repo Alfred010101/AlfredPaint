@@ -4,38 +4,40 @@ import utils.enums.ShapeType;
 import utils.global.DrawVar;
 
 import java.awt.*;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 public class Draw
 {
     public static void drawRealTime(ShapeType shape)
     {
-        switch (shape)
+        int x = (int) Math.min(DrawVar.pointPressed.getX(), DrawVar.pointDragged.getX());
+        int y = (int) Math.min(DrawVar.pointPressed.getY(), DrawVar.pointDragged.getY());
+        int w = (int) Math.abs(DrawVar.pointPressed.getX() - DrawVar.pointDragged.getX());
+        int h = (int) Math.abs(DrawVar.pointPressed.getY() - DrawVar.pointDragged.getY());
+        DrawVar.partialShape  = switch (shape)
         {
-            case ShapeType.LINE ->
-            {
+            case RECTANGLE -> new Rectangle2D.Float(x, y, w, h);
+            case ROUNDRECTANGLE -> new RoundRectangle2D.Float(x, y, w, h, 20, 20);
+            case ELLIPSE -> new Ellipse2D.Float(x, y, w, h);
+            case ARC -> new Arc2D.Float(x, y, w, h, 0, 180, Arc2D.OPEN);
+            case POLYGON ->Shapes.pentagono(x, y, w, h);
 
-            }
-            case ShapeType.RECTANGLE ->
-            {
-                DrawVar.partialShape = new Rectangle2D.Float(
-                        (int) Math.min(DrawVar.pointPressed.getX(), DrawVar.pointDragged.getX()),
-                        (int) Math.min(DrawVar.pointPressed.getY(), DrawVar.pointDragged.getY()),
-                        (int) Math.abs(DrawVar.pointPressed.getX() - DrawVar.pointDragged.getX()),
-                        (int) Math.abs(DrawVar.pointPressed.getY() - DrawVar.pointDragged.getY())
-                );
-            }
-            case ShapeType.ELLIPSE ->
-            {
-                DrawVar.partialShape = new Ellipse2D.Float(
-                        (int) Math.min(DrawVar.pointPressed.getX(), DrawVar.pointDragged.getX()),
-                        (int) Math.min(DrawVar.pointPressed.getY(), DrawVar.pointDragged.getY()),
-                        (int) Math.abs(DrawVar.pointPressed.getX() - DrawVar.pointDragged.getX()),
-                        (int) Math.abs(DrawVar.pointPressed.getY() - DrawVar.pointDragged.getY())
-                );
-            }
-        }
+            case ESTRELLA -> Shapes.estrella(x, y, w, h);
+            case LUNA -> Shapes.luna(x, y, w, h);
+            case ESPADA -> Shapes.espada(x, y, w, h);
+            case CUBO -> Shapes.cubo(x, y, w, h);
+            case LETRAE -> Shapes.letraE(x, y, w, h);
+            case PIRAMIDE -> Shapes.piramide(x, y, w, h);
+            case TORRE -> Shapes.torreE(x, y, w, h);
+            case TREBOL -> Shapes.trebol(x, y, w, h);
+            case RAYO -> Shapes.rayo(x, y, w, h);
+            case CORAZON -> Shapes.corazon(x, y, w, h);
+
+            default -> null;
+        };
     }
 
     public static GradientPaint getGradient()

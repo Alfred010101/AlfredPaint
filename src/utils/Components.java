@@ -61,7 +61,7 @@ public class Components
         buttons[2] = new CustomToggleButton(new MyIcon(ShapeType.ESPADA), "Espada");
         buttons[2].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ESPADA);
 
-        buttons[3] = new CustomToggleButton(new MyIcon(ShapeType.RECTANGLE), "Cubo");
+        buttons[3] = new CustomToggleButton(new MyIcon(ShapeType.CUBO), "Cubo");
         buttons[3].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.CUBO);
 
         buttons[4] = new CustomToggleButton(new MyIcon(ShapeType.PIRAMIDE), "Piramide");
