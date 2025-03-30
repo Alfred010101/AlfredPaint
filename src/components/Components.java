@@ -8,6 +8,7 @@ import utils.enums.ShapeType;
 import utils.enums.StrokeType;
 import utils.global.DrawVars;
 import utils.global.Global;
+import utils.global.SwingVar;
 import utils.interfaces.UpdateTabs;
 import components.sub.StrokePanel;
 import components.sub.SubComponents;
@@ -145,23 +146,23 @@ public class Components
 
     public static JPanel initFillPanel()
     {
-        CardLayout cardLayout = new CardLayout();
+//        CardLayout cardLayout = new CardLayout();
         JPanel container = new JPanel();
 
         container.setLayout(new BorderLayout());
 
-        JToggleButton[] btns = new JToggleButton[4];
-        btns[0] = new CustomToggleButton(new MyIcon(FillType.EMPTY), "Sin Relleno");
-        btns[1] = new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido");
-        btns[2] = new CustomToggleButton(new MyIcon(FillType.GRADIENT), "Gradiante");
-        btns[3] = new CustomToggleButton(new MyIcon(FillType.TEXTURED), "Texturizado");
+//        JToggleButton[] btns = new JToggleButton[4];
+        SwingVar.btns[0] = new CustomToggleButton(new MyIcon(FillType.EMPTY), "Sin Relleno");
+        SwingVar.btns[1] = new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido");
+        SwingVar.btns[2] = new CustomToggleButton(new MyIcon(FillType.GRADIENT), "Gradiante");
+        SwingVar.btns[3] = new CustomToggleButton(new MyIcon(FillType.TEXTURED), "Texturizado");
 
-        btns[1].setSelected(true);
+        SwingVar.btns[1].setSelected(true);
         ButtonGroup toolGroup = new ButtonGroup();
 
-        for (int i = 0; i < btns.length; i++)
+        for (int i = 0; i < SwingVar.btns.length; i++)
         {
-            toolGroup.add(btns[i]);
+            toolGroup.add(SwingVar.btns[i]);
         }
 
         JPanel empty = new JPanel();
@@ -172,43 +173,43 @@ public class Components
         JPanel texturePanel = new JPanel();
         texturePanel.add(new JLabel("En espera de implementar"));
 
-        JPanel containerCard = new JPanel(cardLayout);
-        containerCard.add(empty, "Empty");
-        containerCard.add(fillPanel, "Solid");
-        containerCard.add(gradientPanel, "Gradient");
-        containerCard.add(texturePanel, "Texture");
+//        JPanel containerCard = new JPanel(SwingVar.cardLayoutFill);
+        SwingVar.containerCardFill.add(empty, "Empty");
+        SwingVar.containerCardFill.add(fillPanel, "Solid");
+        SwingVar.containerCardFill.add(gradientPanel, "Gradient");
+        SwingVar.containerCardFill.add(texturePanel, "Texture");
 
         JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        opciones.add(btns[0]);
-        opciones.add(btns[1]);
-        opciones.add(btns[2]);
-        opciones.add(btns[3]);
+        opciones.add(SwingVar.btns[0]);
+        opciones.add(SwingVar.btns[1]);
+        opciones.add(SwingVar.btns[2]);
+        opciones.add(SwingVar.btns[3]);
 
-        btns[0].addActionListener(e ->
+        SwingVar.btns[0].addActionListener(e ->
         {
-            cardLayout.show(containerCard, "Empty");
+            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
             DrawVars.fillType = FillType.EMPTY;
         });
-        btns[1].addActionListener(e ->
+        SwingVar.btns[1].addActionListener(e ->
         {
-            cardLayout.show(containerCard, "Solid");
+            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
             DrawVars.fillType = FillType.SOLID;
         });
-        btns[2].addActionListener(e ->
+        SwingVar.btns[2].addActionListener(e ->
         {
-            cardLayout.show(containerCard, "Gradient");
+            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
             DrawVars.fillType = FillType.GRADIENT;
         });
-        btns[3].addActionListener(e ->
+        SwingVar.btns[3].addActionListener(e ->
         {
-            cardLayout.show(containerCard, "Texture");
+            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
             DrawVars.fillType = FillType.TEXTURED;
         });
 
-        cardLayout.show(containerCard, "Solid");
+        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
 
         container.add(opciones, BorderLayout.NORTH);
-        container.add(containerCard, BorderLayout.CENTER);
+        container.add(SwingVar.containerCardFill, BorderLayout.CENTER);
         return container;
     }
 

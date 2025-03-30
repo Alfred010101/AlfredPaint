@@ -80,7 +80,7 @@ public class PaintApp extends JFrame
 
     private void initJTabbed()
     {
-        SwingVar.propertiesTabbed = new JTabbedPane();
+        //SwingVar.propertiesTabbed = new JTabbedPane();
         propertiesPanels = new JPanel[2];
         propertiesPanels[0] = Components.initFillPanel();
         propertiesPanels[1] = Components.initStrokePanel();

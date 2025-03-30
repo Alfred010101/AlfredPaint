@@ -5,10 +5,7 @@ import model.fillColor.GradientColor;
 import model.fillColor.SolidColor;
 import utils.enums.FillType;
 import utils.enums.StrokeType;
-import utils.global.DrawMethods;
-import utils.global.DrawVars;
-import utils.global.Global;
-import utils.global.SwingVar;
+import utils.global.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,21 +21,30 @@ public class Methods
                 MyShape shape = Global.shapes.get(i);
                 switch (shape.getFillType())
                 {
-                    case EMPTY, TEXTURED ->
+                    case EMPTY ->
                     {
-                        DrawVars.fillColor = Color.WHITE;
-                        DrawVars.startGradientColor = Color.WHITE;
-                        DrawVars.endGradientColor = Color.WHITE;
+                        SwingVar.btns[0].setSelected(true);
+                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
                     }
                     case SOLID ->
                     {
-                        DrawVars.fillColor = ((SolidColor)shape.getFillColor()).getColor();
+                        DrawVars.fillColor = ((SolidColor) shape.getFillColor()).getColor();
+                        SwingVar.btns[1].setSelected(true);
+                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
                     }
                     case GRADIENT ->
                     {
-                        DrawVars.startGradientColor = ((GradientColor)shape.getFillColor()).getStartColor();
-                        DrawVars.endGradientColor = ((GradientColor)shape.getFillColor()).getEndColor();
+                        DrawVars.startGradientColor = ((GradientColor) shape.getFillColor()).getStartColor();
+                        DrawVars.endGradientColor = ((GradientColor) shape.getFillColor()).getEndColor();
+                        SwingVar.btns[2].setSelected(true);
+                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
                     }
+                    case TEXTURED ->
+                    {
+                        SwingVar.btns[3].setSelected(true);
+                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
+                    }
+
                 }
 
 //                if (shape.getStrokeType() != StrokeType.EMPTY)
@@ -48,7 +54,7 @@ public class Methods
 //                    g2.draw(shape.getShape());
 //                }
                 Global.selectedShape.put(i, shape);
-                SwingVar.propertiesTabbed.repaint();
+                SwingMethods.repaintJTabbProp();
                 return;
             }
         }

@@ -1,6 +1,7 @@
 package components.sub;
 
 import utils.global.DrawVars;
+import utils.global.SwingVar;
 import utils.interfaces.UpdatePreviewPanel;
 
 import javax.swing.*;
@@ -14,20 +15,20 @@ public class SubComponents
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(new JLabel("Color:"));
 
-        JButton colorButton = new JButton();
-        colorButton.setBackground(DrawVars.fillColor);
-        colorButton.setPreferredSize(new Dimension(50, 25));
-        colorButton.addActionListener(e ->
+//        JButton colorButton = new JButton();
+        SwingVar.colorFillButton.setBackground(DrawVars.fillColor);
+        SwingVar.colorFillButton.setPreferredSize(new Dimension(50, 25));
+        SwingVar.colorFillButton.addActionListener(e ->
         {
             Color newColor = JColorChooser.showDialog(
-                    null, "Select color", colorButton.getBackground());
+                    null, "Select color", SwingVar.colorFillButton.getBackground());
             if (newColor != null)
             {
                 DrawVars.fillColor = newColor;
-                colorButton.setBackground(newColor);
+                SwingVar.colorFillButton.setBackground(newColor);
             }
         });
-        panel.add(colorButton);
+        panel.add(SwingVar.colorFillButton);
         return panel;
     }
 
@@ -41,19 +42,19 @@ public class SubComponents
         // Selector de color inicial
         JPanel startColorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         startColorPanel.add(new JLabel("Color Inicial:"));
-        JButton startColorBtn = new JButton();
-        startColorBtn.setBackground(DrawVars.startGradientColor);
-        startColorBtn.setPreferredSize(new Dimension(50, 25));
-        startColorPanel.add(startColorBtn);
+//        JButton startColorBtn = new JButton();
+        SwingVar.startGradientColorButton.setBackground(DrawVars.startGradientColor);
+        SwingVar.startGradientColorButton.setPreferredSize(new Dimension(50, 25));
+        startColorPanel.add(SwingVar.startGradientColorButton);
         panel.add(startColorPanel);
 
         // Selector de color final
         JPanel endColorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         endColorPanel.add(new JLabel("Color Final:"));
-        JButton endColorBtn = new JButton();
-        endColorBtn.setBackground(DrawVars.endGradientColor);
-        endColorBtn.setPreferredSize(new Dimension(50, 25));
-        endColorPanel.add(endColorBtn);
+//        JButton endColorBtn = new JButton();
+        SwingVar.endGradientColorButton.setBackground(DrawVars.endGradientColor);
+        SwingVar.endGradientColorButton.setPreferredSize(new Dimension(50, 25));
+        endColorPanel.add(SwingVar.endGradientColorButton);
         panel.add(endColorPanel);
 
         JPanel previewPanel = new JPanel()
@@ -65,8 +66,8 @@ public class SubComponents
                 Graphics2D g2d = (Graphics2D) g;
 
                 GradientPaint gradient = new GradientPaint(
-                        0, 0, startColorBtn.getBackground(),
-                        getWidth(), getHeight(), endColorBtn.getBackground()
+                        0, 0, SwingVar.startGradientColorButton.getBackground(),
+                        getWidth(), getHeight(), SwingVar.endGradientColorButton.getBackground()
                 );
 
                 g2d.setPaint(gradient);
@@ -81,7 +82,7 @@ public class SubComponents
 
         UpdatePreviewPanel preview = (btn) ->
         {
-            Color newColor = JColorChooser.showDialog(null, "Seleccionar color", endColorBtn.getBackground());
+            Color newColor = JColorChooser.showDialog(null, "Seleccionar color", SwingVar.endGradientColorButton.getBackground());
             if (newColor != null)
             {
                 btn.setBackground(newColor);
@@ -89,18 +90,18 @@ public class SubComponents
             }
         };
 
-        startColorBtn.addActionListener(e ->
+        SwingVar.startGradientColorButton.addActionListener(e ->
         {
-            preview.update(startColorBtn);
-            DrawVars.startGradientColor = startColorBtn.getBackground();
+            preview.update(SwingVar.startGradientColorButton);
+            DrawVars.startGradientColor = SwingVar.startGradientColorButton.getBackground();
         });
 
 
 
-        endColorBtn.addActionListener(e ->
+        SwingVar.endGradientColorButton.addActionListener(e ->
         {
-            preview.update(endColorBtn);
-            DrawVars.endGradientColor = endColorBtn.getBackground();
+            preview.update(SwingVar.endGradientColorButton);
+            DrawVars.endGradientColor = SwingVar.endGradientColorButton.getBackground();
         });
 
         return panel;
