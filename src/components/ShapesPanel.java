@@ -13,10 +13,6 @@ public class ShapesPanel extends JPanel
         super(new ShapesPanel.ResponsiveGridLayout(1));
         for (JToggleButton btn : buttons)
         {
-            btn.setPreferredSize(new Dimension(30, 30)); // Tamaño compacto
-            btn.setMinimumSize(new Dimension(30, 30));
-            btn.setMaximumSize(new Dimension(30, 30));
-
             add(btn);
         }
         setBorder(BorderFactory.createTitledBorder(title));

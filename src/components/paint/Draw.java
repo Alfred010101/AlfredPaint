@@ -65,4 +65,17 @@ public class Draw
             case TEXTURED -> null;
         };
     }
+
+    public static GradientPaint getGradient(Shape shape, Color start, Color end, boolean cyclic)
+    {
+        return new GradientPaint(
+                shape.getBounds().x,
+                shape.getBounds().y,
+                start,
+                shape.getBounds().width,
+                shape.getBounds().height,
+                end,
+                cyclic
+        );
+    }
 }

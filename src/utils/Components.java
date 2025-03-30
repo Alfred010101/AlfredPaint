@@ -1,7 +1,7 @@
 package utils;
 
 import components.sub.CustomToggleButton;
-import components.sub.ShapeIcon;
+import components.sub.MyIcon;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
 import utils.global.DrawVar;
@@ -17,28 +17,28 @@ public class Components
     public static JToggleButton[] createTogglesJavaShapes(ButtonGroup toolGroup)
     {
         JToggleButton[] buttons = new JToggleButton[8];
-        buttons[0] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Line");
+        buttons[0] = new CustomToggleButton(new MyIcon(ShapeType.LINE), "Line");
         buttons[0].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.LINE);
 
-        buttons[1] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Rectangle");
+        buttons[1] = new CustomToggleButton(new MyIcon(ShapeType.RECTANGLE), "Rectangle");
         buttons[1].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.RECTANGLE);
 
-        buttons[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "RoundRectangle");
+        buttons[2] = new CustomToggleButton(new MyIcon(ShapeType.ROUNDRECTANGLE), "RoundRectangle");
         buttons[2].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ROUNDRECTANGLE);
 
-        buttons[3] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Ellipse");
+        buttons[3] = new CustomToggleButton(new MyIcon(ShapeType.ELLIPSE), "Ellipse");
         buttons[3].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ELLIPSE);
 
-        buttons[4] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Arc");
+        buttons[4] = new CustomToggleButton(new MyIcon(ShapeType.ARC), "Arc");
         buttons[4].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ARC);
 
-        buttons[5] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Polygon");
+        buttons[5] = new CustomToggleButton(new MyIcon(ShapeType.POLYGON), "Polygon");
         buttons[5].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.POLYGON);
 
-        buttons[6] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "QuadCurve");
+        buttons[6] = new CustomToggleButton(new MyIcon(ShapeType.RECTANGLE), "QuadCurve");
         buttons[6].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.QUADCURVE);
 
-        buttons[7] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "CubicCurve");
+        buttons[7] = new CustomToggleButton(new MyIcon(ShapeType.ELLIPSE), "CubicCurve");
         buttons[7].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.CUBICCURVE);
 
         for (int i = 0; i < buttons.length; i++)
@@ -52,34 +52,34 @@ public class Components
     public static JToggleButton[] createTogglesMyShapes(ButtonGroup toolGroup)
     {
         JToggleButton[] buttons = new JToggleButton[10];
-        buttons[0] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Estrella");
+        buttons[0] = new CustomToggleButton(new MyIcon(ShapeType.ESTRELLA), "Estrella");
         buttons[0].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ESTRELLA);
 
-        buttons[1] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Luna");
+        buttons[1] = new CustomToggleButton(new MyIcon(ShapeType.LUNA), "Luna");
         buttons[1].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.LUNA);
 
-        buttons[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Espada");
+        buttons[2] = new CustomToggleButton(new MyIcon(ShapeType.ESPADA), "Espada");
         buttons[2].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.ESPADA);
 
-        buttons[3] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Cubo");
+        buttons[3] = new CustomToggleButton(new MyIcon(ShapeType.RECTANGLE), "Cubo");
         buttons[3].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.CUBO);
 
-        buttons[4] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Piramide");
+        buttons[4] = new CustomToggleButton(new MyIcon(ShapeType.PIRAMIDE), "Piramide");
         buttons[4].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.PIRAMIDE);
 
-        buttons[5] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "LetraE");
+        buttons[5] = new CustomToggleButton(new MyIcon(ShapeType.LETRAE), "LetraE");
         buttons[5].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.LETRAE);
 
-        buttons[6] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Torre");
+        buttons[6] = new CustomToggleButton(new MyIcon(ShapeType.TORRE), "Torre");
         buttons[6].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.TORRE);
 
-        buttons[7] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Trebol");
+        buttons[7] = new CustomToggleButton(new MyIcon(ShapeType.TREBOL), "Trebol");
         buttons[7].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.TREBOL);
 
-        buttons[8] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Rayo");
+        buttons[8] = new CustomToggleButton(new MyIcon(ShapeType.RAYO), "Rayo");
         buttons[8].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.RAYO);
 
-        buttons[9] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Corazon");
+        buttons[9] = new CustomToggleButton(new MyIcon(ShapeType.CORAZON), "Corazon");
         buttons[9].addActionListener(e -> Global.ACTIVE_MODE = ShapeType.CORAZON);
 
         for (int i = 0; i < buttons.length; i++)
@@ -148,19 +148,16 @@ public class Components
         container.setLayout(new BorderLayout());
 
         JToggleButton[] btns = new JToggleButton[4];
-        btns[0] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Sin Relleno");
-        btns[1] = new CustomToggleButton(new ShapeIcon(ShapeType.RECTANGLE), "Solido");
-        btns[2] = new CustomToggleButton(new ShapeIcon(ShapeType.LINE), "Gradiante");
-        btns[3] = new CustomToggleButton(new ShapeIcon(ShapeType.ELLIPSE), "Texturizado");
+        btns[0] = new CustomToggleButton(new MyIcon(FillType.EMPTY), "Sin Relleno");
+        btns[1] = new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido");
+        btns[2] = new CustomToggleButton(new MyIcon(FillType.GRADIENT), "Gradiante");
+        btns[3] = new CustomToggleButton(new MyIcon(FillType.TEXTURED), "Texturizado");
 
         btns[1].setSelected(true);
         ButtonGroup toolGroup = new ButtonGroup();
 
         for (int i = 0; i < btns.length; i++)
         {
-            btns[i].setPreferredSize(new Dimension(30, 30)); // Tamaño compacto
-            btns[i].setMinimumSize(new Dimension(30, 30));
-            btns[i].setMaximumSize(new Dimension(30, 30));
             toolGroup.add(btns[i]);
         }
 

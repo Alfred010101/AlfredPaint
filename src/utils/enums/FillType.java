@@ -1,6 +1,8 @@
 package utils.enums;
 
-public enum FillType
+import utils.interfaces.UnionIcons;
+
+public enum FillType implements UnionIcons
 {
     EMPTY,
     SOLID,

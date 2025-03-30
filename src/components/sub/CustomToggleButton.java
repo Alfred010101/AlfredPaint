@@ -22,6 +22,9 @@ public class CustomToggleButton extends JToggleButton
         setFocusPainted(false);
         setRolloverEnabled(true);
         setToolTipText(toolName);
+        setPreferredSize(new Dimension(30, 30)); // Tamaño compacto
+        setMinimumSize(new Dimension(30, 30));
+        setMaximumSize(new Dimension(30, 30));
 
         addMouseListener(new MouseAdapter()
         {
