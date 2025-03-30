@@ -9,16 +9,21 @@ import java.awt.*;
 
 public class StrokePanel extends JPanel
 {
-    private float currentWidth = 2.0f;
-    private int capType = BasicStroke.CAP_BUTT;
-    private int joinType = BasicStroke.JOIN_MITER;
-    private float[] dashPattern = null;
+    public static float currentWidth = 2.0f;
+    public static int capType = BasicStroke.CAP_BUTT;
+    public static int joinType = BasicStroke.JOIN_MITER;
+    public static float[] dashPattern = null;
 
 
-    private JSlider widthSlider;
+    private static JSlider widthSlider;
     private JLabel widthValueLabel;
     private ButtonGroup capButtonGroup, joinButtonGroup;
     private JComboBox<float[]> styleCombo;
+    private JButton colorButton;
+    private JToggleButton[] buttonJoin = new CustomToggleButton[3];
+    private JToggleButton[] buttonCap = new CustomToggleButton[3];
+
+    private float[][] patternsClase;
 
     public StrokePanel()
     {
@@ -28,7 +33,7 @@ public class StrokePanel extends JPanel
         JPanel colorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         colorPanel.add(new JLabel("Color:"));
 
-        JButton colorButton = new JButton();
+        colorButton = new JButton();
         colorButton.setBackground(DrawVars.strokeColor);
         colorButton.setPreferredSize(new Dimension(50, 25));
         colorButton.addActionListener(e ->
@@ -76,24 +81,24 @@ public class StrokePanel extends JPanel
         String[] capNames = {"BUTT CAP", "ROUND CAP", "SQUARE CAP"};
         for (int i = 0; i < capValues.length; i++)
         {
-            JToggleButton button = new CustomToggleButton(new MyIcon(capValues[i]), capNames[i]);
-            button.setPreferredSize(new Dimension(35, 35)); // Tamaño compacto
-            button.setMinimumSize(new Dimension(35, 35));
-            button.setMaximumSize(new Dimension(35, 35));
+            buttonCap[i] = new CustomToggleButton(new MyIcon(capValues[i]), capNames[i]);
+            buttonCap[i].setPreferredSize(new Dimension(35, 35)); // Tamaño compacto
+            buttonCap[i].setMinimumSize(new Dimension(35, 35));
+            buttonCap[i].setMaximumSize(new Dimension(35, 35));
             final int capValue = switch (capValues[i])
             {
                 case CAP_BUTT -> 0;
                 case CAP_ROUND -> 1;
                 case CAP_SQUARE -> 2;
             };
-            button.addActionListener(e ->
+            buttonCap[i].addActionListener(e ->
             {
                 capType = capValue;
                 updateStroke();
             });
-            if (i == 0) button.setSelected(true);
-            capButtonGroup.add(button);
-            capPanel.add(button);
+            if (i == 0) buttonCap[i].setSelected(true);
+            capButtonGroup.add(buttonCap[i]);
+            capPanel.add(buttonCap[i]);
         }
         container.add(capPanel);
 
@@ -107,10 +112,10 @@ public class StrokePanel extends JPanel
         String[] joinNames = {"MITER JOIN", "ROUND JOIN", "BEVEL JOIN"};
         for (int i = 0; i < joinValues.length; i++)
         {
-            JToggleButton button = new CustomToggleButton(new MyIcon(joinValues[i]), joinNames[i]);
-            button.setPreferredSize(new Dimension(35, 35)); // Tamaño compacto
-            button.setMinimumSize(new Dimension(35, 35));
-            button.setMaximumSize(new Dimension(35, 35));
+            buttonJoin[i] = new CustomToggleButton(new MyIcon(joinValues[i]), joinNames[i]);
+            buttonJoin[i].setPreferredSize(new Dimension(35, 35)); // Tamaño compacto
+            buttonJoin[i].setMinimumSize(new Dimension(35, 35));
+            buttonJoin[i].setMaximumSize(new Dimension(35, 35));
 
             final int joinValue = switch (joinValues[i])
             {
@@ -118,14 +123,14 @@ public class StrokePanel extends JPanel
                 case JOIN_ROUND -> 1;
                 case JOIN_BEVEL -> 2;
             };
-            button.addActionListener(e ->
+            buttonJoin[i].addActionListener(e ->
             {
                 joinType = joinValue;
                 updateStroke();
             });
-            if (i == 0) button.setSelected(true);
-            joinButtonGroup.add(button);
-            joinPanel.add(button);
+            if (i == 0) buttonJoin[i].setSelected(true);
+            joinButtonGroup.add(buttonJoin[i]);
+            joinPanel.add(buttonJoin[i]);
         }
         container.add(joinPanel);
 
@@ -140,6 +145,8 @@ public class StrokePanel extends JPanel
                 {5, 3, 15, 3}, {8, 4, 20, 4}, // Puntos-guis
                 {10, 4, 2, 4, 2, 4}, {15, 5, 3, 5, 3, 5, 3, 5} // Complejos
         };
+
+        patternsClase = patterns;
 
         styleCombo = new JComboBox<>(patterns);
         styleCombo.setRenderer(new StrokePanel.LineStyleRenderer());
@@ -166,7 +173,7 @@ public class StrokePanel extends JPanel
         {
             this.pattern = value;
             setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-            //updateStroke();
+            updateStroke();
             return this;
         }
 
@@ -197,8 +204,60 @@ public class StrokePanel extends JPanel
 
     private void updateStroke()
     {
-            DrawVars.strokeDraw = (dashPattern != null) ?
-                    new BasicStroke(currentWidth, capType, joinType, 1.0f, dashPattern, 0.0f) :
-                    new BasicStroke(currentWidth, capType, joinType);
+        DrawVars.strokeDraw = (dashPattern != null) ?
+                new BasicStroke(currentWidth, capType, joinType, 1.0f, dashPattern, 0.0f) :
+                new BasicStroke(currentWidth, capType, joinType);
+    }
+
+    public void updateInterfaz()
+    {
+        widthValueLabel.setText(String.valueOf((int) StrokePanel.currentWidth));
+        widthSlider.setValue((int) StrokePanel.currentWidth);
+
+        styleCombo.setSelectedIndex(encontrarIndicePatron(dashPattern));
+        colorButton.setBackground(DrawVars.strokeColor);
+        buttonCap[capType].setSelected(true);
+        buttonJoin[joinType].setSelected(true);
+    }
+
+    private int encontrarIndicePatron(float[] patronBuscado)
+    {
+        for (int i = 0; i < patternsClase.length; i++)
+        {
+            if (patternsClase[i] == null)
+            {
+                if (patronBuscado == null)
+                {
+                    return i; // Caso especial para el primer elemento null
+                }
+                continue;
+            }
+
+            if (patronBuscado == null)
+            {
+                continue;
+            }
+
+            if (patternsClase[i].length != patronBuscado.length)
+            {
+                continue;
+            }
+
+            boolean coincide = true;
+            for (int j = 0; j < patternsClase[i].length; j++)
+            {
+                if (patternsClase[i][j] != patronBuscado[j])
+                {
+                    coincide = false;
+                    break;
+                }
+            }
+
+            if (coincide)
+            {
+                return i;
+            }
+        }
+        return -1; // Retorna -1 si no se encuentra el patrón
     }
 }

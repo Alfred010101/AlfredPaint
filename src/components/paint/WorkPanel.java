@@ -54,8 +54,11 @@ public class WorkPanel extends JPanel
         {
             if(!Global.selectedShape.isEmty())
             {
+                g2.setColor(Color.BLUE);
+                float[] dashPattern = {5, 5};
+                g2.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, dashPattern, 0));
                 Rectangle dim = Global.selectedShape.getMyShape().getShape().getBounds();
-                g2.drawRect(dim.x, dim.y, dim.width, dim.height);
+                g2.drawRect(dim.x - 3, dim.y - 3, dim.width + 6, dim.height + 6);
             }
         }
 

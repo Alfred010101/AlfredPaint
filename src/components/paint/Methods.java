@@ -1,5 +1,6 @@
 package components.paint;
 
+import components.sub.StrokePanel;
 import model.MyShape;
 import model.fillColor.GradientColor;
 import model.fillColor.SolidColor;
@@ -23,36 +24,46 @@ public class Methods
                 {
                     case EMPTY ->
                     {
-                        SwingVar.btns[0].setSelected(true);
+                        SwingVar.btnsFillType[0].setSelected(true);
                         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
                     }
                     case SOLID ->
                     {
                         DrawVars.fillColor = ((SolidColor) shape.getFillColor()).getColor();
-                        SwingVar.btns[1].setSelected(true);
+                        SwingVar.btnsFillType[1].setSelected(true);
                         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
                     }
                     case GRADIENT ->
                     {
                         DrawVars.startGradientColor = ((GradientColor) shape.getFillColor()).getStartColor();
                         DrawVars.endGradientColor = ((GradientColor) shape.getFillColor()).getEndColor();
-                        SwingVar.btns[2].setSelected(true);
+                        SwingVar.btnsFillType[2].setSelected(true);
                         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
                     }
                     case TEXTURED ->
                     {
-                        SwingVar.btns[3].setSelected(true);
+                        SwingVar.btnsFillType[3].setSelected(true);
                         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
                     }
-
                 }
-
-//                if (shape.getStrokeType() != StrokeType.EMPTY)
-//                {
-//                    g2.setColor(shape.getStrokeColor());
-//                    g2.setStroke(shape.getStroke());
-//                    g2.draw(shape.getShape());
-//                }
+                switch (shape.getStrokeType())
+                {
+                    case EMPTY ->
+                    {
+                        SwingVar.btnsStrokeType[0].setSelected(true);
+                        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
+                    }
+                    case SOLID ->
+                    {
+                        DrawVars.strokeColor = shape.getStrokeColor();
+                        SwingVar.btnsStrokeType[1].setSelected(true);
+                        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
+                        StrokePanel.currentWidth = shape.getStroke().getLineWidth();
+                        StrokePanel.capType = shape.getStroke().getEndCap();
+                        StrokePanel.joinType = shape.getStroke().getLineJoin();
+                        StrokePanel.dashPattern = shape.getStroke().getDashArray();
+                    }
+                }
                 Global.selectedShape.put(i, shape);
                 SwingMethods.repaintJTabbProp();
                 return;
