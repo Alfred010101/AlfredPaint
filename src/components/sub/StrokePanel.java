@@ -1,8 +1,11 @@
 package components.sub;
 
+import mian.PaintApp;
 import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
 import utils.global.DrawVars;
+import utils.global.Global;
+import utils.global.Update;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +47,12 @@ public class StrokePanel extends JPanel
             {
                 DrawVars.strokeColor = newColor;
                 colorButton.setBackground(newColor);
+                if (!Global.selectedShape.isEmty())
+                {
+                    Global.selectedShape.getMyShape().setStrokeColor(DrawVars.strokeColor);
+                    PaintApp.workPanel.repaint();
+                    // Update.shapeSelected();
+                }
             }
         });
         colorPanel.add(colorButton);
@@ -207,6 +216,11 @@ public class StrokePanel extends JPanel
         DrawVars.strokeDraw = (dashPattern != null) ?
                 new BasicStroke(currentWidth, capType, joinType, 1.0f, dashPattern, 0.0f) :
                 new BasicStroke(currentWidth, capType, joinType);
+        if(!Global.selectedShape.isEmty())
+        {
+            Global.selectedShape.getMyShape().setStroke(DrawVars.strokeDraw);
+            PaintApp.workPanel.repaint();
+        }
     }
 
     public void updateInterfaz()

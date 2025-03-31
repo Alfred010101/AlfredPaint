@@ -2,13 +2,10 @@ package components;
 
 import components.sub.CustomToggleButton;
 import components.sub.MyIcon;
-import utils.global.Const;
+import utils.global.*;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
 import utils.enums.StrokeType;
-import utils.global.DrawVars;
-import utils.global.Global;
-import utils.global.SwingVar;
 import utils.interfaces.UpdateTabs;
 import components.sub.StrokePanel;
 import components.sub.SubComponents;
@@ -189,21 +186,25 @@ public class Components
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
             DrawVars.fillType = FillType.EMPTY;
+            Update.shapeSelected();
         });
         SwingVar.btnsFillType[1].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
             DrawVars.fillType = FillType.SOLID;
+            Update.shapeSelected();
         });
         SwingVar.btnsFillType[2].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
             DrawVars.fillType = FillType.GRADIENT;
+            Update.shapeSelected();
         });
         SwingVar.btnsFillType[3].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
             DrawVars.fillType = FillType.TEXTURED;
+            Update.shapeSelected();
         });
 
         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
@@ -246,11 +247,13 @@ public class Components
         {
             SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
             DrawVars.strokeType = StrokeType.EMPTY;
+            Update.shapeSelected();
         });
         SwingVar.btnsStrokeType[1].addActionListener(e ->
         {
             SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
             DrawVars.strokeType = StrokeType.SOLID;
+            Update.shapeSelected();
         });
 
         SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");

@@ -1,3 +1,5 @@
+package mian;
+
 import components.ShapesPanel;
 import components.SplitPanel;
 import components.ToolsPanel;
@@ -17,7 +19,7 @@ public class PaintApp extends JFrame
     private JPanel javaShapes;
     private JPanel myShapes;
     private JPanel toolsPanel;
-    private JPanel workPanel;
+    public static JPanel workPanel;
 
     private ButtonGroup toolGroup;
 
