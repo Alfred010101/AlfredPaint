@@ -66,6 +66,8 @@ public class Methods
                 }
                 Global.selectedShape.put(i, shape);
                 SwingMethods.repaintJTabbProp();
+                Global.offSet.x = Global.pointPressed.x;// - shape.getShape().getBounds().x;
+                Global.offSet.y = Global.pointPressed.y;// - shape.getShape().getBounds().y;
                 return;
             }
         }

@@ -15,6 +15,7 @@ public class Global
     public static Point pointPressed = new Point();
     public static Point pointReleased = new Point();
     public static Point pointDragged = new Point();
+    public static Point offSet = new Point();
 
     public static UnionModes ACTIVE_MODE = ShapeType.RECTANGLE;
     public static ArrayList<MyShape> shapes = new ArrayList<>();

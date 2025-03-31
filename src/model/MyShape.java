@@ -3,9 +3,12 @@ package model;
 import utils.enums.FillType;
 import utils.enums.ShapeType;
 import utils.enums.StrokeType;
+import utils.global.DrawMethods;
 import utils.interfaces.ColorFill;
+import utils.shapes.Shapes;
 
 import java.awt.*;
+import java.awt.geom.*;
 
 public class MyShape
 {
@@ -110,5 +113,12 @@ public class MyShape
     {
         this.fillType = type;
         this.fillColor = color;
+    }
+
+    public void move(int dx, int dy)
+    {
+        AffineTransform transform = new AffineTransform();
+        transform.setToTranslation(dx, dy);
+        shape = transform.createTransformedShape(shape);
     }
 }
