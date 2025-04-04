@@ -30,3 +30,4 @@ bin/
 
 ###MyTest###
 src/test
+/build/
