@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  *
@@ -30,10 +31,25 @@ public class ProperityPanelBuilder
         panel.setBorder(BorderFactory.createEmptyBorder(top, left, bottom, right));
         return this;
     }
+    
+    public ProperityPanelBuilder setBorder(Border borde)
+    {
+        panel.setBorder(borde);
+        return this;
+    }
 
     public ProperityPanelBuilder addComponent(Component component)
     {
         panel.add(component);
+        return this;
+    }
+    
+    public ProperityPanelBuilder addComponent(Component[] components)
+    {
+        for (Component component : components)
+        {
+            panel.add(component);
+        }        
         return this;
     }
 

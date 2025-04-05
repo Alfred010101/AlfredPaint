@@ -12,7 +12,7 @@ import java.awt.*;
 public class MyIcon implements Icon
 {
     private static final int SIZE = 20;
-    private UnionIcons type;
+    private final UnionIcons type;
 
     public MyIcon(UnionIcons type)
     {
@@ -162,7 +162,7 @@ public class MyIcon implements Icon
         } else if (type instanceof StrokeType icon)
         {
             Shape shape = new Rectangle.Float(x + padding - 3, y + padding - 3, width + 6, height + 6);
-
+            g2.setColor(Color.BLACK);
             switch (icon)
             {
                 case EMPTY ->
@@ -172,8 +172,7 @@ public class MyIcon implements Icon
                 }
                 case SOLID ->
                 {
-                    g2.setColor(DrawVars.strokeColor);
-                    g2.fill(shape);
+                    g2.draw(shape);
                 }
             }
         }
