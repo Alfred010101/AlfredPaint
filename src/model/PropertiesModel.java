@@ -43,8 +43,11 @@ public class PropertiesModel
             (int) (Math.random() * 255) + 0,
             (int) (Math.random() * 255) + 0
     );
-
-    private BasicStroke strokeDraw = new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
+    
+    private int currentWidth = 2;
+    private int strokeCap = BasicStroke.CAP_BUTT;
+    private int strokeJoin = BasicStroke.JOIN_MITER;
+    private float[] dashPattern = null;
 
     public void addObserver(PropertiesObserver obs)
     {
@@ -167,19 +170,70 @@ public class PropertiesModel
     }
 
     /**
-     * @return the strokeDraw
+     * @return the currentWidth
      */
-    public BasicStroke getStrokeDraw()
+    public int getCurrentWidth()
     {
-        return strokeDraw;
+        return currentWidth;
     }
 
     /**
-     * @param strokeDraw the strokeDraw to set
+     * @param currentWidth the currentWidth to set
      */
-    public void setStrokeDraw(BasicStroke strokeDraw)
+    public void setCurrentWidth(int currentWidth)
     {
-        this.strokeDraw = strokeDraw;
+        this.currentWidth = currentWidth;
+        notifyObservers();
+    }
+
+    /**
+     * @return the strokeCap
+     */
+    public int getStrokeCap()
+    {
+        return strokeCap;
+    }
+
+    /**
+     * @param strokeCap the capType to set
+     */
+    public void setStrokeCap(int strokeCap)
+    {
+        this.strokeCap = strokeCap;
+        notifyObservers();
+    }
+
+    /**
+     * @return the strokeJoin
+     */
+    public int getStrokeJoin()
+    {
+        return strokeJoin;
+    }
+
+    /**
+     * @param strokeJoin the joinType to set
+     */
+    public void setStrokeJoin(int strokeJoin)
+    {
+        this.strokeJoin = strokeJoin;
+        notifyObservers();
+    }
+
+    /**
+     * @return the dashPattern
+     */
+    public float[] getDashPattern()
+    {
+        return dashPattern;
+    }
+
+    /**
+     * @param dashPattern the dashPattern to set
+     */
+    public void setDashPattern(float[] dashPattern)
+    {
+        this.dashPattern = dashPattern;
         notifyObservers();
     }
 }

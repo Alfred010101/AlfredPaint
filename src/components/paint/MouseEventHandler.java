@@ -80,9 +80,9 @@ public class MouseEventHandler implements MouseListener
                     Global.partialShape,
                     model.getFillType(),
                     color,
-                    DrawVars.strokeType,
-                    DrawVars.strokeType == StrokeType.EMPTY ? null : DrawVars.strokeColor,
-                    DrawVars.strokeType == StrokeType.EMPTY ? null : DrawVars.strokeDraw
+                    model.getStrokeType(),
+                    model.getStrokeType() == StrokeType.EMPTY ? null : model.getStrokeColor(),
+                    model.getStrokeType() == StrokeType.EMPTY ? null : Methods.updateStroke(model)
             );
             Global.shapes.add(myShape);
             Global.partialShape = null;

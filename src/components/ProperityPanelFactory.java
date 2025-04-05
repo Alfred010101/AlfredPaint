@@ -7,9 +7,6 @@ import components.sub.MyIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -121,7 +118,7 @@ public class ProperityPanelFactory
     private JPanel panelButton()
     {
         JButton colorButton = new JButton();
-        colorButton.setBackground(Color.RED);
+        colorButton.setBackground(model.getStrokeColor());
         colorButton.setPreferredSize(new Dimension(50, 25));
         colorButton.addActionListener(e ->
         {
@@ -129,14 +126,8 @@ public class ProperityPanelFactory
                     null, "Select color", colorButton.getBackground());
             if (newColor != null)
             {
-                //DrawVars.strokeColor = newColor;
                 colorButton.setBackground(newColor);
-//                if (!Global.selectedShape.isEmty())
-//                {
-//                    Global.selectedShape.getMyShape().setStrokeColor(DrawVars.strokeColor);
-//                    PaintApp.workPanel.repaint();
-//                    // Update.shapeSelected();
-//                }
+                model.setStrokeColor(newColor);
             }
         });
 
@@ -182,16 +173,15 @@ public class ProperityPanelFactory
 
     private JPanel panelWidth()
     {
+        JLabel widthValueLabel = new JLabel(String.valueOf(model.getCurrentWidth()));
+        widthValueLabel.setPreferredSize(new Dimension(20, 15));
+
         JSlider widthSlider = new JSlider(1, 20, 2);
         widthSlider.addChangeListener(e ->
         {
-//            currentWidth = widthSlider.getValue();
-//            widthValueLabel.setText(String.valueOf((int) currentWidth));
-//            updateStroke();
+            model.setCurrentWidth(widthSlider.getValue());
+            widthValueLabel.setText(String.valueOf(model.getCurrentWidth()));
         });
-
-        JLabel widthValueLabel = new JLabel("20");
-        widthValueLabel.setPreferredSize(new Dimension(20, 15));
 
         return new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
@@ -206,30 +196,23 @@ public class ProperityPanelFactory
     {
 
         ButtonGroup capButtonGroup = new ButtonGroup();
-
-//        StrokeCap[] capValues = {StrokeCap.CAP_BUTT, StrokeCap.CAP_ROUND, StrokeCap.CAP_SQUARE};
-//        String[] capNames = {"BUTT CAP", "ROUND CAP", "SQUARE CAP"};
         JToggleButton[] btns = new JToggleButton[items.length];
 
         for (int i = 0; i < items.length; i++)
         {
-            btns[i] = new CustomToggleButton(new MyIcon((UnionIcons) items[i]), names[i]);
-            btns[i].setPreferredSize(new Dimension(35, 35)); // Tamaño compacto
+            UnionStrokeStyle item = items[i];
+            btns[i] = new CustomToggleButton(new MyIcon((UnionIcons) item), names[i]);
+            btns[i].setPreferredSize(new Dimension(35, 35));
             btns[i].setMinimumSize(new Dimension(35, 35));
             btns[i].setMaximumSize(new Dimension(35, 35));
             btns[i].addActionListener(e ->
             {
-//                capType = switch (items[i])
-//                {
-//                    case CAP_BUTT ->
-//                        0;
-//                    case CAP_ROUND ->
-//                        1;
-//                    case CAP_SQUARE ->
-//                        2;
-//                };;
-//                updateStroke();
+                item.applyTo(model);
             });
+            if (item.isSelected(model))
+            {
+                btns[i].setSelected(true);
+            }
             capButtonGroup.add(btns[i]);
         }
 
@@ -245,66 +228,66 @@ public class ProperityPanelFactory
         float[][] patterns =
         {
             null, // Continua
-            
+
             {
                 5, 3
-            }, 
+            },
             {
                 8, 4
-            }, 
+            },
             {
                 10, 5
-            }, 
+            },
             {
                 12, 6
-            }, 
+            },
             {
                 15, 5
-            }, 
+            },
             {
                 20, 10
             }, // Discontinuos
-            
+
             {
                 2, 2
-            }, 
+            },
             {
                 3, 3
-            }, 
+            },
             {
                 4, 4
-            }, 
+            },
             {
                 5, 5
             }, // Punteados
-            
+
             {
                 10, 3, 3, 3
-            }, 
+            },
             {
                 15, 5, 5, 5
-            }, 
+            },
             {
                 20, 5, 5, 5, 5, 5
             }, // Mixtos
-            
+
             {
                 15, 5, 3, 5
-            }, 
+            },
             {
                 20, 10, 5, 10
             }, // Guiones
-            
+
             {
                 5, 3, 15, 3
-            }, 
+            },
             {
                 8, 4, 20, 4
             }, // Puntos-guis
-            
+
             {
                 10, 4, 2, 4, 2, 4
-            }, 
+            },
             {
                 15, 5, 3, 5, 3, 5, 3, 5
             } // Complejos
@@ -315,13 +298,56 @@ public class ProperityPanelFactory
         styleCombo.addActionListener(e ->
         {
             int patter = styleCombo.getSelectedIndex();
-//            dashPattern = (patter == -1) ? null : patterns[patter];
-//            updateStroke();
+            model.setDashPattern((patter == -1) ? null : patterns[patter]);
         });
+        
+        styleCombo.setSelectedIndex(encontrarIndicePatron(patterns, model.getDashPattern()));
+        
         return new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
                 .addComponent(new JLabel("Estilo:"))
                 .addComponent(styleCombo)
                 .build();
+    }
+
+    private int encontrarIndicePatron(float[][] patterns, float[] patronBuscado)
+    {
+        for (int i = 0; i < patterns.length; i++)
+        {
+            if (patterns[i] == null)
+            {
+                if (patronBuscado == null)
+                {
+                    return i; // Caso especial para el primer elemento null
+                }
+                continue;
+            }
+
+            if (patronBuscado == null)
+            {
+                continue;
+            }
+
+            if (patterns[i].length != patronBuscado.length)
+            {
+                continue;
+            }
+
+            boolean coincide = true;
+            for (int j = 0; j < patterns[i].length; j++)
+            {
+                if (patterns[i][j] != patronBuscado[j])
+                {
+                    coincide = false;
+                    break;
+                }
+            }
+
+            if (coincide)
+            {
+                return i;
+            }
+        }
+        return -1; // Retorna -1 si no se encuentra el patrón
     }
 }

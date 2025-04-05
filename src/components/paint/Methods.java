@@ -4,15 +4,19 @@ import components.sub.StrokePanel;
 import model.MyShape;
 import model.fillColor.GradientColor;
 import model.fillColor.SolidColor;
-import utils.enums.FillType;
-import utils.enums.StrokeType;
 import utils.global.*;
 
 import java.awt.*;
-import java.util.ArrayList;
+import model.PropertiesModel;
 
 public class Methods
 {
+    public static BasicStroke updateStroke(PropertiesModel model)
+    {
+        return (model.getDashPattern() != null)
+                ? new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin(), 1.0f, model.getDashPattern(), 0.0f)
+                : new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin());
+    }
     public static void actionSelectOne()
     {
         for (int i = Global.shapes.size() - 1; i >= 0; i--)

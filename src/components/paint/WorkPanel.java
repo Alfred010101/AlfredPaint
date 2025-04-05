@@ -76,10 +76,10 @@ public class WorkPanel extends JPanel implements PropertiesObserver
                 g2.fill(Global.partialShape);
             }
 
-            if(DrawVars.strokeType != StrokeType.EMPTY)
+            if(model.getStrokeType() != StrokeType.EMPTY)
             {
-                g2.setColor(DrawVars.strokeColor);
-                g2.setStroke(DrawVars.strokeDraw);
+                g2.setColor(model.getStrokeColor());
+                g2.setStroke(Methods.updateStroke(model));
                 g2.draw(Global.partialShape);
             }
         }
