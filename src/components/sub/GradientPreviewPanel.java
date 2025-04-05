@@ -9,27 +9,26 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
+import model.PropertiesModel;
+import utils.interfaces.PropertiesObserver;
 
 /**
  *
  * @author Alfred
  */
-public class GradientPreviewPanel extends JPanel
+public class GradientPreviewPanel extends JPanel implements PropertiesObserver
 {
 
     private final JButton startColorButton;
     private final JButton endColorButton;
-    private Color startColor;
-    private Color endColor;
-
-    public GradientPreviewPanel(JButton startColorButton, JButton endColorButton)
+    private final PropertiesModel model;
+    
+    public GradientPreviewPanel(PropertiesModel model, JButton startColorButton, JButton endColorButton)
     {
+        this.model = model;
         this.startColorButton = startColorButton;
         this.endColorButton = endColorButton;
         
-        this.startColor = startColorButton.getBackground();
-        this.endColor = endColorButton.getBackground();
-
         this.startColorButton.addActionListener(e -> updateColor(startColorButton, true));
         this.endColorButton.addActionListener(e -> updateColor(endColorButton, false));
 
@@ -45,10 +44,10 @@ public class GradientPreviewPanel extends JPanel
             button.setBackground(newColor);
             if (isStartColor)
             {
-                startColor = newColor;
+                model.setStartGradientColor(newColor);
             } else
             {
-                endColor = newColor;
+                model.setEndGradientColor(newColor);
             }
             repaint();
         }
@@ -59,8 +58,14 @@ public class GradientPreviewPanel extends JPanel
     {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        GradientPaint gradient = new GradientPaint(0, 0, startColor, getWidth(), getHeight(), endColor);
+        GradientPaint gradient = new GradientPaint(0, 0, model.getStartGradientColor(), getWidth(), getHeight(), model.getEndGradientColor());
         g2d.setPaint(gradient);
         g2d.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    @Override
+    public void onPropertiesChanged(PropertiesModel model)
+    {
+        
     }
 }

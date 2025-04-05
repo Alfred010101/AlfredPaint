@@ -28,7 +28,7 @@ public class FillPanel extends ProperityPanel
 
         addOption(FillType.SOLID,
                 new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido"),
-                factory.createFillPanel(Color.BLUE)
+                factory.createFillPanel()
         );
 
         addOption(FillType.GRADIENT,

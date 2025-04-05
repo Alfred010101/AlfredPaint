@@ -11,6 +11,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import model.PropertiesModel;
 
 public class DrawMethods
 {
@@ -65,6 +66,35 @@ public class DrawMethods
                     Global.partialShape.getBounds().width,
                     Global.partialShape.getBounds().height,
                     DrawVars.endGradientColor,
+                    false
+            );
+            case TEXTURED -> null;
+        };
+    }
+    
+    public static GradientPaint getGradient(PropertiesModel model)
+    {
+        System.out.println("" + model.getEndGradientColor());
+        return switch (model.getFillType())
+        {
+            case EMPTY -> null;
+            case SOLID -> new GradientPaint(
+                    Global.partialShape.getBounds().x,
+                    Global.partialShape.getBounds().y,
+                    model.getFillColor(),
+                    Global.partialShape.getBounds().width,
+                    Global.partialShape.getBounds().height,
+                    model.getFillColor(),
+                    false
+            );
+
+            case GRADIENT -> new GradientPaint(
+                    Global.partialShape.getBounds().x,
+                    Global.partialShape.getBounds().y,
+                    model.getStartGradientColor(),
+                    Global.partialShape.getBounds().width,
+                    Global.partialShape.getBounds().height,
+                    model.getEndGradientColor(),
                     false
             );
             case TEXTURED -> null;

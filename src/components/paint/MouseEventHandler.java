@@ -14,14 +14,17 @@ import utils.interfaces.ColorFill;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import model.PropertiesModel;
 
 public class MouseEventHandler implements MouseListener
 {
 
     private final JPanel panel;
+    private final PropertiesModel model;
 
-    public MouseEventHandler(JPanel panel)
+    public MouseEventHandler(PropertiesModel model, JPanel panel)
     {
+        this.model = model;
         this.panel = panel;
     }
 
@@ -64,18 +67,18 @@ public class MouseEventHandler implements MouseListener
     {
         if(Global.ACTIVE_MODE instanceof ShapeType shape && Global.partialShape != null)
         {
-            ColorFill color = switch (DrawVars.fillType)
+            ColorFill color = switch (model.getFillType())
             {
                 case EMPTY -> null;
-                case SOLID -> new SolidColor(DrawVars.fillColor);
-                case GRADIENT -> new GradientColor(DrawVars.startGradientColor, DrawVars.endGradientColor);
+                case SOLID -> new SolidColor(model.getFillColor());
+                case GRADIENT -> new GradientColor(model.getStartGradientColor(), model.getEndGradientColor());
                 case TEXTURED -> null;
             };
 
             MyShape myShape = new MyShape(
                     (ShapeType) Global.ACTIVE_MODE,
                     Global.partialShape,
-                    DrawVars.fillType,
+                    model.getFillType(),
                     color,
                     DrawVars.strokeType,
                     DrawVars.strokeType == StrokeType.EMPTY ? null : DrawVars.strokeColor,

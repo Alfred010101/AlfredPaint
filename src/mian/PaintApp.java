@@ -85,7 +85,7 @@ public class PaintApp extends JFrame
 
     private void initWorkPanel()
     {
-        workPanel = new WorkPanel();
+        workPanel = new WorkPanel(model);
     }
 
     private void initJTabbed()

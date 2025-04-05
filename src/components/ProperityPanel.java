@@ -24,7 +24,7 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
 {
 
     private static PropertiesModel model;
-    protected final ProperityPanelFactory factory = new ProperityPanelFactory();
+    protected final ProperityPanelFactory factory;
     private final JPanel panelOpciones = new JPanel();
     private final Map<UnionFillStroke, JToggleButton> buttons = new HashMap<>();
     private final CardLayout cardLayout = new CardLayout();
@@ -36,6 +36,7 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
     {
         ProperityPanel.model = model;
         ProperityPanel.model.addObserver(ProperityPanel.this);
+        factory = new ProperityPanelFactory(ProperityPanel.model);
         setLayout(new BorderLayout());
         initPanelOpciones();
         add(panelOpciones, BorderLayout.NORTH);

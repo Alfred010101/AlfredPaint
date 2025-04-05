@@ -13,16 +13,21 @@ import utils.global.Global;
 
 import javax.swing.*;
 import java.awt.*;
+import model.PropertiesModel;
+import utils.interfaces.PropertiesObserver;
 
-public class WorkPanel extends JPanel
+public class WorkPanel extends JPanel implements PropertiesObserver
 {
-
-    private final MouseEventHandler mouseEventHandler = new MouseEventHandler(WorkPanel.this);
+    private final PropertiesModel model;
+    private final MouseEventHandler mouseEventHandler;
     private final MouseMotionEvenetHandler mouseMotionEventHandler = new MouseMotionEvenetHandler(WorkPanel.this);
 
-    public WorkPanel()
+    public WorkPanel(PropertiesModel model)
     {
         super();
+        this.model = model;
+        this.model.addObserver(WorkPanel.this);
+        mouseEventHandler = new MouseEventHandler(model, WorkPanel.this);
         addMouseListener(mouseEventHandler);
         addMouseMotionListener(mouseMotionEventHandler);
         setBackground(Color.WHITE);
@@ -64,8 +69,7 @@ public class WorkPanel extends JPanel
 
         if (Global.ACTIVE_MODE instanceof ShapeType && Global.partialShape != null)
         {
-            GradientPaint gradient = DrawMethods.getGradient();
-
+            GradientPaint gradient = DrawMethods.getGradient(model);
             if(gradient != null)
             {
                 g2.setPaint(gradient);
@@ -79,5 +83,11 @@ public class WorkPanel extends JPanel
                 g2.draw(Global.partialShape);
             }
         }
+    }
+
+    @Override
+    public void onPropertiesChanged(PropertiesModel model)
+    {
+        
     }
 }

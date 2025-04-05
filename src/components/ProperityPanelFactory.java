@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
+import model.PropertiesModel;
 import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
 import utils.interfaces.UnionIcons;
@@ -33,6 +34,13 @@ import utils.interfaces.UnionStrokeStyle;
 public class ProperityPanelFactory
 {
 
+    private final PropertiesModel model;
+
+    public ProperityPanelFactory(PropertiesModel model)
+    {
+        this.model = model;
+    }
+
     private final ProperityPanelBuilder builder = new ProperityPanelBuilder();
 
     public JPanel createEmptyPanel(String txt)
@@ -43,19 +51,18 @@ public class ProperityPanelFactory
                 .build();
     }
 
-    public JPanel createFillPanel(Color color)
+    public JPanel createFillPanel()
     {
         JButton colorButton = new JButton();
-        colorButton.setBackground(color);
+        colorButton.setBackground(model.getFillColor());
         colorButton.setPreferredSize(new Dimension(50, 25));
         colorButton.addActionListener(e ->
         {
             Color newColor = JColorChooser.showDialog(null, "Select color", colorButton.getBackground());
             if (newColor != null)
             {
-                //DrawVars.fillColor = newColor;
+                model.setFillColor(newColor);
                 colorButton.setBackground(newColor);
-                //Update.shapeSelected();
             }
         });
         return builder.reset()
@@ -72,12 +79,9 @@ public class ProperityPanelFactory
         JButton end = new JButton();
 
         start.setPreferredSize(new Dimension(50, 25));
-        start.setBackground(Color.MAGENTA);
+        start.setBackground(model.getStartGradientColor());
         end.setPreferredSize(new Dimension(50, 25));
-        end.setBackground(Color.ORANGE);
-
-        start.addActionListener(e -> System.out.println("Start"));
-        end.addActionListener(e -> System.out.println("End"));
+        end.setBackground(model.getEndGradientColor());
 
         JPanel startColorPanel = new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
@@ -91,7 +95,7 @@ public class ProperityPanelFactory
                 .addComponent(end)
                 .build();
 
-        JPanel previewPanel = new GradientPreviewPanel(start, end);
+        JPanel previewPanel = new GradientPreviewPanel(model, start, end);
 
         return builder.reset()
                 .setLayout(new BoxLayout(builder.build(), BoxLayout.Y_AXIS))
@@ -101,7 +105,6 @@ public class ProperityPanelFactory
                 .addComponent(previewPanel)
                 .addComponent(Box.createVerticalGlue())
                 .build();
-
     }
 
     public JPanel createStrokePanel()
@@ -236,17 +239,75 @@ public class ProperityPanelFactory
                 .addComponent(btns)
                 .build();
     }
-    
+
     private JPanel panelStyle()
     {
-        float[][] patterns = {
-                null, // Continua
-                {5, 3}, {8, 4}, {10, 5}, {12, 6}, {15, 5}, {20, 10}, // Discontinuos
-                {2, 2}, {3, 3}, {4, 4}, {5, 5}, // Punteados
-                {10, 3, 3, 3}, {15, 5, 5, 5}, {20, 5, 5, 5, 5, 5}, // Mixtos
-                {15, 5, 3, 5}, {20, 10, 5, 10}, // Guiones
-                {5, 3, 15, 3}, {8, 4, 20, 4}, // Puntos-guis
-                {10, 4, 2, 4, 2, 4}, {15, 5, 3, 5, 3, 5, 3, 5} // Complejos
+        float[][] patterns =
+        {
+            null, // Continua
+            
+            {
+                5, 3
+            }, 
+            {
+                8, 4
+            }, 
+            {
+                10, 5
+            }, 
+            {
+                12, 6
+            }, 
+            {
+                15, 5
+            }, 
+            {
+                20, 10
+            }, // Discontinuos
+            
+            {
+                2, 2
+            }, 
+            {
+                3, 3
+            }, 
+            {
+                4, 4
+            }, 
+            {
+                5, 5
+            }, // Punteados
+            
+            {
+                10, 3, 3, 3
+            }, 
+            {
+                15, 5, 5, 5
+            }, 
+            {
+                20, 5, 5, 5, 5, 5
+            }, // Mixtos
+            
+            {
+                15, 5, 3, 5
+            }, 
+            {
+                20, 10, 5, 10
+            }, // Guiones
+            
+            {
+                5, 3, 15, 3
+            }, 
+            {
+                8, 4, 20, 4
+            }, // Puntos-guis
+            
+            {
+                10, 4, 2, 4, 2, 4
+            }, 
+            {
+                15, 5, 3, 5, 3, 5, 3, 5
+            } // Complejos
         };
         JComboBox<float[]> styleCombo = new JComboBox<>(patterns);
         styleCombo.setRenderer(new LineStyleRenderer());
