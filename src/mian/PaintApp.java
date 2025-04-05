@@ -5,15 +5,19 @@ import components.SplitPanel;
 import components.ToolsPanel;
 import components.paint.WorkPanel;
 import components.Components;
+import components.FillPanel;
+import components.StrokePanel;
 import utils.global.Const;
 import utils.global.SwingVar;
 import utils.interfaces.UpdateTabs;
 
 import javax.swing.*;
 import java.awt.*;
+import model.PropertiesModel;
 
 public class PaintApp extends JFrame
 {
+
     private JMenuBar menuBar;
     private JSplitPane splitPane;
     private JPanel javaShapes;
@@ -25,6 +29,9 @@ public class PaintApp extends JFrame
 
     //private JTabbedPane propertiesTabbed;
     private JPanel[] propertiesPanels;
+
+    private PropertiesModel model;
+    public JTabbedPane propertiesTabbed = new JTabbedPane();
 
     public PaintApp()
     {
@@ -39,6 +46,7 @@ public class PaintApp extends JFrame
 
     private void initComponents()
     {
+        model = new PropertiesModel();
         toolGroup = new ButtonGroup();
 
         javaShapes = new ShapesPanel(Components.createTogglesJavaShapes(toolGroup), "Java");
@@ -71,7 +79,7 @@ public class PaintApp extends JFrame
 
     private void initJSplit()
     {
-        JScrollPane scrollPane = Components.initJSplit(javaShapes,myShapes);
+        JScrollPane scrollPane = Components.initJSplit(javaShapes, myShapes);
         splitPane = new SplitPanel(scrollPane, workPanel);
     }
 
@@ -84,8 +92,8 @@ public class PaintApp extends JFrame
     {
         //SwingVar.propertiesTabbed = new JTabbedPane();
         propertiesPanels = new JPanel[2];
-        propertiesPanels[0] = Components.initFillPanel();
-        propertiesPanels[1] = Components.initStrokePanel();
+        propertiesPanels[0] = new FillPanel(model);
+        propertiesPanels[1] = new StrokePanel(model);
     }
 
     private UpdateTabs updateTabs()
