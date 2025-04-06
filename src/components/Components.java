@@ -186,25 +186,25 @@ public class Components
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
             DrawVars.fillType = FillType.EMPTY;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
         SwingVar.btnsFillType[1].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
             DrawVars.fillType = FillType.SOLID;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
         SwingVar.btnsFillType[2].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
             DrawVars.fillType = FillType.GRADIENT;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
         SwingVar.btnsFillType[3].addActionListener(e ->
         {
             SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
             DrawVars.fillType = FillType.TEXTURED;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
 
         SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
@@ -247,13 +247,13 @@ public class Components
         {
             SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
             DrawVars.strokeType = StrokeType.EMPTY;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
         SwingVar.btnsStrokeType[1].addActionListener(e ->
         {
             SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
             DrawVars.strokeType = StrokeType.SOLID;
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
 
         SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");

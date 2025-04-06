@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import model.PropertiesModel;
 import utils.enums.FillType;
+import utils.enums.Mode;
 import utils.enums.StrokeType;
+import utils.global.Global;
 import utils.interfaces.PropertiesObserver;
 import utils.interfaces.UnionFillStroke;
 
@@ -50,6 +52,7 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
     }
 
     protected abstract void createOptions();
+    protected abstract UnionFillStroke getCurrentType(PropertiesModel model);
 
     protected void defaultSelection(UnionFillStroke key)
     {
@@ -75,7 +78,13 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
     @Override
     public void onPropertiesChanged(PropertiesModel model)
     {
-
+        if (Global.ACTIVE_MODE instanceof Mode)
+        {
+            UnionFillStroke key = getCurrentType(model);
+            buttons.get(key).setSelected(true);
+            cardLayout.show(containerCard, key.getKey());
+            System.out.println("Llamado...");
+        }
     }
 
     private ActionListener changedFillType(UnionFillStroke key)

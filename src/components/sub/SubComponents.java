@@ -2,7 +2,7 @@ package components.sub;
 
 import utils.global.DrawVars;
 import utils.global.SwingVar;
-import utils.global.Update;
+import utils.global.ShapeController;
 import utils.interfaces.UpdatePreviewPanel;
 
 import javax.swing.*;
@@ -27,7 +27,7 @@ public class SubComponents
             {
                 DrawVars.fillColor = newColor;
                 SwingVar.colorFillButton.setBackground(newColor);
-                Update.shapeSelected();
+                ShapeController.shapeSelected();
             }
         });
         panel.add(SwingVar.colorFillButton);
@@ -96,7 +96,7 @@ public class SubComponents
         {
             preview.update(SwingVar.startGradientColorButton);
             DrawVars.startGradientColor = SwingVar.startGradientColorButton.getBackground();
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
 
 
@@ -105,7 +105,7 @@ public class SubComponents
         {
             preview.update(SwingVar.endGradientColorButton);
             DrawVars.endGradientColor = SwingVar.endGradientColorButton.getBackground();
-            Update.shapeSelected();
+            ShapeController.shapeSelected();
         });
 
         return panel;

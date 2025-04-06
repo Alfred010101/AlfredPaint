@@ -5,7 +5,7 @@ import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
 import utils.global.DrawVars;
 import utils.global.Global;
-import utils.global.Update;
+import utils.global.ShapeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +51,7 @@ public class StrokePanel extends JPanel
                 {
                     Global.selectedShape.getMyShape().setStrokeColor(DrawVars.strokeColor);
                     PaintApp.workPanel.repaint();
-                    // Update.shapeSelected();
+                    // ShapeController.shapeSelected();
                 }
             }
         });

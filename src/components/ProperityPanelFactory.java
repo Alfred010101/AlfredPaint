@@ -21,6 +21,9 @@ import javax.swing.JToggleButton;
 import model.PropertiesModel;
 import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
+import utils.global.Global;
+import utils.global.ShapeController;
+import utils.interfaces.PropertiesObserver;
 import utils.interfaces.UnionIcons;
 import utils.interfaces.UnionStrokeStyle;
 
@@ -60,7 +63,17 @@ public class ProperityPanelFactory
             {
                 model.setFillColor(newColor);
                 colorButton.setBackground(newColor);
+                if (!Global.selectedShape.isEmty())
+                {
+                    Global.selectedShape.getMyShape().setFillColor(ShapeController.applyChangesFiller(model));  
+                    System.out.println("Notificando cambios");
+                    model.notifyObservers();
+                }
             }
+        });
+        model.addObserver((PropertiesModel model1) ->
+        {
+            colorButton.setBackground(model1.getFillColor());
         });
         return builder.reset()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
@@ -93,6 +106,16 @@ public class ProperityPanelFactory
                 .build();
 
         JPanel previewPanel = new GradientPreviewPanel(model, start, end);
+
+        model.addObserver((PropertiesModel model1) ->
+        {
+            start.setBackground(model1.getStartGradientColor());
+        });
+        model.addObserver((PropertiesModel model1) ->
+        {
+            end.setBackground(model1.getEndGradientColor());
+            previewPanel.repaint();
+        });
 
         return builder.reset()
                 .setLayout(new BoxLayout(builder.build(), BoxLayout.Y_AXIS))
@@ -129,6 +152,11 @@ public class ProperityPanelFactory
                 colorButton.setBackground(newColor);
                 model.setStrokeColor(newColor);
             }
+        });
+
+        model.addObserver((PropertiesModel model1) ->
+        {
+            colorButton.setBackground(model1.getStrokeColor());
         });
 
         return new ProperityPanelBuilder()
@@ -183,6 +211,11 @@ public class ProperityPanelFactory
             widthValueLabel.setText(String.valueOf(model.getCurrentWidth()));
         });
 
+        model.addObserver((PropertiesModel model1) ->
+        {
+            widthSlider.setValue(model.getCurrentWidth());
+        });
+
         return new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
                 .addComponent(new JLabel("Width: "))
@@ -209,12 +242,17 @@ public class ProperityPanelFactory
             {
                 item.applyTo(model);
             });
-            if (item.isSelected(model))
-            {
-                btns[i].setSelected(true);
-            }
+            btns[i].setSelected(item.isSelected(model));
             capButtonGroup.add(btns[i]);
         }
+
+        model.addObserver((PropertiesModel model1) ->
+        {
+            for (int i = 0; i < items.length; i++)
+            {
+                btns[i].setSelected(items[i].isSelected(model1));
+            }
+        });
 
         return new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
@@ -300,9 +338,14 @@ public class ProperityPanelFactory
             int patter = styleCombo.getSelectedIndex();
             model.setDashPattern((patter == -1) ? null : patterns[patter]);
         });
-        
+
         styleCombo.setSelectedIndex(encontrarIndicePatron(patterns, model.getDashPattern()));
-        
+
+        model.addObserver((PropertiesModel model1) ->
+        {
+            styleCombo.setSelectedIndex(encontrarIndicePatron(patterns, model.getDashPattern()));
+        });
+
         return new ProperityPanelBuilder()
                 .setLayout(new FlowLayout(FlowLayout.LEFT))
                 .addComponent(new JLabel("Estilo:"))

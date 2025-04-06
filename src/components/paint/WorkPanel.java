@@ -88,6 +88,7 @@ public class WorkPanel extends JPanel implements PropertiesObserver
     @Override
     public void onPropertiesChanged(PropertiesModel model)
     {
-        
+        repaint();
+        System.out.println("REpinto panel de trabajo");
     }
 }

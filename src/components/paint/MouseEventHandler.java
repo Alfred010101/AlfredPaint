@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.PropertiesModel;
+import utils.global.ShapeController;
 
 public class MouseEventHandler implements MouseListener
 {
@@ -52,7 +53,7 @@ public class MouseEventHandler implements MouseListener
         {
             switch (mode)
             {
-                case SELECT_ONE -> Methods.actionSelectOne();
+                case SELECT_ONE -> Methods.actionSelectOne(model);
                 case SELECT_POINT -> System.out.println();
                 case SELECT_AREA -> System.out.println();
                 case SELECT_ALL -> System.out.println();
@@ -67,23 +68,24 @@ public class MouseEventHandler implements MouseListener
     {
         if(Global.ACTIVE_MODE instanceof ShapeType shape && Global.partialShape != null)
         {
-            ColorFill color = switch (model.getFillType())
-            {
-                case EMPTY -> null;
-                case SOLID -> new SolidColor(model.getFillColor());
-                case GRADIENT -> new GradientColor(model.getStartGradientColor(), model.getEndGradientColor());
-                case TEXTURED -> null;
-            };
-
-            MyShape myShape = new MyShape(
-                    (ShapeType) Global.ACTIVE_MODE,
-                    Global.partialShape,
-                    model.getFillType(),
-                    color,
-                    model.getStrokeType(),
-                    model.getStrokeType() == StrokeType.EMPTY ? null : model.getStrokeColor(),
-                    model.getStrokeType() == StrokeType.EMPTY ? null : Methods.updateStroke(model)
-            );
+//            ColorFill color = switch (model.getFillType())
+//            {
+//                case EMPTY -> null;
+//                case SOLID -> new SolidColor(model.getFillColor());
+//                case GRADIENT -> new GradientColor(model.getStartGradientColor(), model.getEndGradientColor());
+//                case TEXTURED -> null;
+//            };
+//
+//            MyShape myShape = new MyShape(
+//                    (ShapeType) Global.ACTIVE_MODE,
+//                    Global.partialShape,
+//                    model.getFillType(),
+//                    color,
+//                    model.getStrokeType(),
+//                    model.getStrokeType() == StrokeType.EMPTY ? null : model.getStrokeColor(),
+//                    model.getStrokeType() == StrokeType.EMPTY ? null : Methods.updateStroke(model)
+//            );
+            MyShape myShape = ShapeController.createShape(model, (ShapeType)Global.ACTIVE_MODE);
             Global.shapes.add(myShape);
             Global.partialShape = null;
         }

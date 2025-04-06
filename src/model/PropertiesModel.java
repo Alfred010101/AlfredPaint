@@ -59,7 +59,7 @@ public class PropertiesModel
         observers.remove(obs);
     }
 
-    private void notifyObservers()
+    public void notifyObservers()
     {
         for (PropertiesObserver ob : observers)
         {
@@ -81,7 +81,7 @@ public class PropertiesModel
     public void setFillType(FillType fillType)
     {
         this.fillType = fillType;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -98,7 +98,7 @@ public class PropertiesModel
     public void setFillColor(Color fillColor)
     {
         this.fillColor = fillColor;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -115,7 +115,7 @@ public class PropertiesModel
     public void setStartGradientColor(Color startGradientColor)
     {
         this.startGradientColor = startGradientColor;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -132,7 +132,7 @@ public class PropertiesModel
     public void setEndGradientColor(Color endGradientColor)
     {
         this.endGradientColor = endGradientColor;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -149,7 +149,7 @@ public class PropertiesModel
     public void setStrokeColor(Color strokeColor)
     {
         this.strokeColor = strokeColor;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -166,7 +166,7 @@ public class PropertiesModel
     public void setStrokeType(StrokeType strokeType)
     {
         this.strokeType = strokeType;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -183,7 +183,7 @@ public class PropertiesModel
     public void setCurrentWidth(int currentWidth)
     {
         this.currentWidth = currentWidth;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -200,7 +200,7 @@ public class PropertiesModel
     public void setStrokeCap(int strokeCap)
     {
         this.strokeCap = strokeCap;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -217,7 +217,7 @@ public class PropertiesModel
     public void setStrokeJoin(int strokeJoin)
     {
         this.strokeJoin = strokeJoin;
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -234,6 +234,6 @@ public class PropertiesModel
     public void setDashPattern(float[] dashPattern)
     {
         this.dashPattern = dashPattern;
-        notifyObservers();
+//        notifyObservers();
     }
 }

@@ -4,6 +4,7 @@ import components.sub.CustomToggleButton;
 import components.sub.MyIcon;
 import model.PropertiesModel;
 import utils.enums.StrokeType;
+import utils.interfaces.UnionFillStroke;
 
 /**
  *
@@ -33,5 +34,11 @@ public class StrokePanel extends ProperityPanel
         );
 
         defaultSelection(StrokeType.SOLID);
+    }
+    
+    @Override
+    protected UnionFillStroke getCurrentType(PropertiesModel model)
+    {
+        return model.getStrokeType();
     }
 }

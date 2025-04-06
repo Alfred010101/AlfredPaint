@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import model.PropertiesModel;
 import utils.enums.FillType;
+import utils.interfaces.UnionFillStroke;
 
 /**
  *
@@ -42,5 +43,11 @@ public class FillPanel extends ProperityPanel
         );
 
         defaultSelection(FillType.SOLID);
+    }
+
+    @Override
+    protected UnionFillStroke getCurrentType(PropertiesModel model)
+    {
+        return model.getFillType();
     }
 }

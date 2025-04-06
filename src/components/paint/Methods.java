@@ -8,16 +8,19 @@ import utils.global.*;
 
 import java.awt.*;
 import model.PropertiesModel;
+import utils.enums.StrokeType;
 
 public class Methods
 {
+
     public static BasicStroke updateStroke(PropertiesModel model)
     {
         return (model.getDashPattern() != null)
                 ? new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin(), 1.0f, model.getDashPattern(), 0.0f)
                 : new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin());
     }
-    public static void actionSelectOne()
+
+    public static void actionSelectOne(PropertiesModel model)
     {
         for (int i = Global.shapes.size() - 1; i >= 0; i--)
         {
@@ -26,50 +29,31 @@ public class Methods
                 MyShape shape = Global.shapes.get(i);
                 switch (shape.getFillType())
                 {
-                    case EMPTY ->
-                    {
-                        SwingVar.btnsFillType[0].setSelected(true);
-                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
-                    }
                     case SOLID ->
                     {
-                        DrawVars.fillColor = ((SolidColor) shape.getFillColor()).getColor();
-                        SwingVar.btnsFillType[1].setSelected(true);
-                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
+                        model.setFillColor(((SolidColor) shape.getFillColor()).getColor());
                     }
                     case GRADIENT ->
                     {
-                        DrawVars.startGradientColor = ((GradientColor) shape.getFillColor()).getStartColor();
-                        DrawVars.endGradientColor = ((GradientColor) shape.getFillColor()).getEndColor();
-                        SwingVar.btnsFillType[2].setSelected(true);
-                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
-                    }
-                    case TEXTURED ->
-                    {
-                        SwingVar.btnsFillType[3].setSelected(true);
-                        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
+                        model.setStartGradientColor(((GradientColor) shape.getFillColor()).getStartColor());
+                        model.setEndGradientColor(((GradientColor) shape.getFillColor()).getEndColor());
                     }
                 }
-                switch (shape.getStrokeType())
+                model.setFillType(shape.getFillType());
+
+                if (shape.getStrokeType() == StrokeType.SOLID)
                 {
-                    case EMPTY ->
-                    {
-                        SwingVar.btnsStrokeType[0].setSelected(true);
-                        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
-                    }
-                    case SOLID ->
-                    {
-                        DrawVars.strokeColor = shape.getStrokeColor();
-                        SwingVar.btnsStrokeType[1].setSelected(true);
-                        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
-                        StrokePanel.currentWidth = shape.getStroke().getLineWidth();
-                        StrokePanel.capType = shape.getStroke().getEndCap();
-                        StrokePanel.joinType = shape.getStroke().getLineJoin();
-                        StrokePanel.dashPattern = shape.getStroke().getDashArray();
-                    }
+                    model.setStrokeColor(shape.getStrokeColor());
+                    model.setCurrentWidth((int) shape.getStroke().getLineWidth());
+                    model.setStrokeCap(shape.getStroke().getEndCap());
+                    model.setStrokeJoin(shape.getStroke().getLineJoin());
+                    model.setDashPattern(shape.getStroke().getDashArray());
                 }
+                model.setStrokeType(shape.getStrokeType());
+                model.notifyObservers();
+                
                 Global.selectedShape.put(i, shape);
-                SwingMethods.repaintJTabbProp();
+                //SwingMethods.repaintJTabbProp();
                 Global.offSet.x = Global.pointPressed.x;// - shape.getShape().getBounds().x;
                 Global.offSet.y = Global.pointPressed.y;// - shape.getShape().getBounds().y;
                 return;
