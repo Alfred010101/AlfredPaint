@@ -141,125 +141,125 @@ public class Components
         return scrollPane;
     }
 
-    public static JPanel initFillPanel()
-    {
-//        CardLayout cardLayout = new CardLayout();
-        JPanel container = new JPanel();
-
-        container.setLayout(new BorderLayout());
-
-//        JToggleButton[] btns = new JToggleButton[4];
-        SwingVar.btnsFillType[0] = new CustomToggleButton(new MyIcon(FillType.EMPTY), "Sin Relleno");
-        SwingVar.btnsFillType[1] = new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido");
-        SwingVar.btnsFillType[2] = new CustomToggleButton(new MyIcon(FillType.GRADIENT), "Gradiante");
-        SwingVar.btnsFillType[3] = new CustomToggleButton(new MyIcon(FillType.TEXTURED), "Texturizado");
-
-        SwingVar.btnsFillType[1].setSelected(true);
-        ButtonGroup toolGroup = new ButtonGroup();
-
-        for (int i = 0; i < SwingVar.btnsFillType.length; i++)
-        {
-            toolGroup.add(SwingVar.btnsFillType[i]);
-        }
-
-        JPanel empty = new JPanel();
-        empty.add(new JLabel("No paint"));
-        JPanel fillPanel = SubComponents.createFillPanel();
-        JPanel gradientPanel = SubComponents.createGradientPanel();
-        //JPanel texturePanel = SubComponents.createTexturePanel();
-        JPanel texturePanel = new JPanel();
-        texturePanel.add(new JLabel("En espera de implementar"));
-
-//        JPanel containerCard = new JPanel(SwingVar.cardLayoutFill);
-        SwingVar.containerCardFill.add(empty, "Empty");
-        SwingVar.containerCardFill.add(fillPanel, "Solid");
-        SwingVar.containerCardFill.add(gradientPanel, "Gradient");
-        SwingVar.containerCardFill.add(texturePanel, "Texture");
-
-        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        opciones.add(SwingVar.btnsFillType[0]);
-        opciones.add(SwingVar.btnsFillType[1]);
-        opciones.add(SwingVar.btnsFillType[2]);
-        opciones.add(SwingVar.btnsFillType[3]);
-
-        SwingVar.btnsFillType[0].addActionListener(e ->
-        {
-            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
-            DrawVars.fillType = FillType.EMPTY;
-            ShapeController.shapeSelected();
-        });
-        SwingVar.btnsFillType[1].addActionListener(e ->
-        {
-            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
-            DrawVars.fillType = FillType.SOLID;
-            ShapeController.shapeSelected();
-        });
-        SwingVar.btnsFillType[2].addActionListener(e ->
-        {
-            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
-            DrawVars.fillType = FillType.GRADIENT;
-            ShapeController.shapeSelected();
-        });
-        SwingVar.btnsFillType[3].addActionListener(e ->
-        {
-            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
-            DrawVars.fillType = FillType.TEXTURED;
-            ShapeController.shapeSelected();
-        });
-
-        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
-
-        container.add(opciones, BorderLayout.NORTH);
-        container.add(SwingVar.containerCardFill, BorderLayout.CENTER);
-        return container;
-    }
-
-    public static JPanel initStrokePanel()
-    {
-//        CardLayout cardLayout = new CardLayout();
-        JPanel container = new JPanel();
-
-        container.setLayout(new BorderLayout());
-
-//        JToggleButton[] btns = new JToggleButton[2];
-        SwingVar.btnsStrokeType[0] = new CustomToggleButton(new MyIcon(StrokeType.EMPTY), "Sin Relleno");
-        SwingVar.btnsStrokeType[1] = new CustomToggleButton(new MyIcon(StrokeType.SOLID), "Solido");
-
-        SwingVar.btnsStrokeType[1].setSelected(true);
-        ButtonGroup toolGroup = new ButtonGroup();
-
-        toolGroup.add(SwingVar.btnsStrokeType[0]);
-        toolGroup.add(SwingVar.btnsStrokeType[1]);
-
-        JPanel empty = new JPanel();
-        empty.add(new JLabel("No paint"));
-//        JPanel strokePanel = new StrokePanel();
-
-//        JPanel containerCard = new JPanel(SwingVar.cardLayoutStroke);
-        SwingVar.containerCardStroke.add(empty, "Empty");
-        SwingVar.containerCardStroke.add(SwingVar.strokePanel, "Solid");
-
-        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        opciones.add(SwingVar.btnsStrokeType[0]);
-        opciones.add(SwingVar.btnsStrokeType[1]);
-
-        SwingVar.btnsStrokeType[0].addActionListener(e ->
-        {
-            SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
-            DrawVars.strokeType = StrokeType.EMPTY;
-            ShapeController.shapeSelected();
-        });
-        SwingVar.btnsStrokeType[1].addActionListener(e ->
-        {
-            SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
-            DrawVars.strokeType = StrokeType.SOLID;
-            ShapeController.shapeSelected();
-        });
-
-        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
-
-        container.add(opciones, BorderLayout.NORTH);
-        container.add(SwingVar.containerCardStroke, BorderLayout.CENTER);
-        return container;
-    }
+//    public static JPanel initFillPanel()
+//    {
+////        CardLayout cardLayout = new CardLayout();
+//        JPanel container = new JPanel();
+//
+//        container.setLayout(new BorderLayout());
+//
+////        JToggleButton[] btns = new JToggleButton[4];
+//        SwingVar.btnsFillType[0] = new CustomToggleButton(new MyIcon(FillType.EMPTY), "Sin Relleno");
+//        SwingVar.btnsFillType[1] = new CustomToggleButton(new MyIcon(FillType.SOLID), "Solido");
+//        SwingVar.btnsFillType[2] = new CustomToggleButton(new MyIcon(FillType.GRADIENT), "Gradiante");
+//        SwingVar.btnsFillType[3] = new CustomToggleButton(new MyIcon(FillType.TEXTURED), "Texturizado");
+//
+//        SwingVar.btnsFillType[1].setSelected(true);
+//        ButtonGroup toolGroup = new ButtonGroup();
+//
+//        for (int i = 0; i < SwingVar.btnsFillType.length; i++)
+//        {
+//            toolGroup.add(SwingVar.btnsFillType[i]);
+//        }
+//
+//        JPanel empty = new JPanel();
+//        empty.add(new JLabel("No paint"));
+//        JPanel fillPanel = SubComponents.createFillPanel();
+//        JPanel gradientPanel = SubComponents.createGradientPanel();
+//        //JPanel texturePanel = SubComponents.createTexturePanel();
+//        JPanel texturePanel = new JPanel();
+//        texturePanel.add(new JLabel("En espera de implementar"));
+//
+////        JPanel containerCard = new JPanel(SwingVar.cardLayoutFill);
+//        SwingVar.containerCardFill.add(empty, "Empty");
+//        SwingVar.containerCardFill.add(fillPanel, "Solid");
+//        SwingVar.containerCardFill.add(gradientPanel, "Gradient");
+//        SwingVar.containerCardFill.add(texturePanel, "Texture");
+//
+//        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        opciones.add(SwingVar.btnsFillType[0]);
+//        opciones.add(SwingVar.btnsFillType[1]);
+//        opciones.add(SwingVar.btnsFillType[2]);
+//        opciones.add(SwingVar.btnsFillType[3]);
+//
+//        SwingVar.btnsFillType[0].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Empty");
+//            DrawVars.fillType = FillType.EMPTY;
+//            ShapeController.shapeSelected();
+//        });
+//        SwingVar.btnsFillType[1].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
+//            DrawVars.fillType = FillType.SOLID;
+//            ShapeController.shapeSelected();
+//        });
+//        SwingVar.btnsFillType[2].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Gradient");
+//            DrawVars.fillType = FillType.GRADIENT;
+//            ShapeController.shapeSelected();
+//        });
+//        SwingVar.btnsFillType[3].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Texture");
+//            DrawVars.fillType = FillType.TEXTURED;
+//            ShapeController.shapeSelected();
+//        });
+//
+//        SwingVar.cardLayoutFill.show(SwingVar.containerCardFill, "Solid");
+//
+//        container.add(opciones, BorderLayout.NORTH);
+//        container.add(SwingVar.containerCardFill, BorderLayout.CENTER);
+//        return container;
+//    }
+//
+//    public static JPanel initStrokePanel()
+//    {
+////        CardLayout cardLayout = new CardLayout();
+//        JPanel container = new JPanel();
+//
+//        container.setLayout(new BorderLayout());
+//
+////        JToggleButton[] btns = new JToggleButton[2];
+//        SwingVar.btnsStrokeType[0] = new CustomToggleButton(new MyIcon(StrokeType.EMPTY), "Sin Relleno");
+//        SwingVar.btnsStrokeType[1] = new CustomToggleButton(new MyIcon(StrokeType.SOLID), "Solido");
+//
+//        SwingVar.btnsStrokeType[1].setSelected(true);
+//        ButtonGroup toolGroup = new ButtonGroup();
+//
+//        toolGroup.add(SwingVar.btnsStrokeType[0]);
+//        toolGroup.add(SwingVar.btnsStrokeType[1]);
+//
+//        JPanel empty = new JPanel();
+//        empty.add(new JLabel("No paint"));
+////        JPanel strokePanel = new StrokePanel();
+//
+////        JPanel containerCard = new JPanel(SwingVar.cardLayoutStroke);
+//        SwingVar.containerCardStroke.add(empty, "Empty");
+//        SwingVar.containerCardStroke.add(SwingVar.strokePanel, "Solid");
+//
+//        JPanel opciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        opciones.add(SwingVar.btnsStrokeType[0]);
+//        opciones.add(SwingVar.btnsStrokeType[1]);
+//
+//        SwingVar.btnsStrokeType[0].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Empty");
+//            DrawVars.strokeType = StrokeType.EMPTY;
+//            ShapeController.shapeSelected();
+//        });
+//        SwingVar.btnsStrokeType[1].addActionListener(e ->
+//        {
+//            SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
+//            DrawVars.strokeType = StrokeType.SOLID;
+//            ShapeController.shapeSelected();
+//        });
+//
+//        SwingVar.cardLayoutStroke.show(SwingVar.containerCardStroke, "Solid");
+//
+//        container.add(opciones, BorderLayout.NORTH);
+//        container.add(SwingVar.containerCardStroke, BorderLayout.CENTER);
+//        return container;
+//    }
 }

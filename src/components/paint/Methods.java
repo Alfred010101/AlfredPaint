@@ -19,6 +19,47 @@ public class Methods
                 ? new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin(), 1.0f, model.getDashPattern(), 0.0f)
                 : new BasicStroke(model.getCurrentWidth(), model.getStrokeCap(), model.getStrokeJoin());
     }
+    
+    public static int encontrarIndicePatron(float[] patronBuscado)
+    {
+        for (int i = 0; i < Const.patterns.length; i++)
+        {
+            if (Const.patterns[i] == null)
+            {
+                if (patronBuscado == null)
+                {
+                    return i; // Caso especial para el primer elemento null
+                }
+                continue;
+            }
+
+            if (patronBuscado == null)
+            {
+                continue;
+            }
+
+            if (Const.patterns[i].length != patronBuscado.length)
+            {
+                continue;
+            }
+
+            boolean coincide = true;
+            for (int j = 0; j < Const.patterns[i].length; j++)
+            {
+                if (Const.patterns[i][j] != patronBuscado[j])
+                {
+                    coincide = false;
+                    break;
+                }
+            }
+
+            if (coincide)
+            {
+                return i;
+            }
+        }
+        return -1; // Retorna -1 si no se encuentra el patrón
+    }
 
     public static void actionSelectOne(PropertiesModel model)
     {
@@ -50,12 +91,12 @@ public class Methods
                     model.setDashPattern(shape.getStroke().getDashArray());
                 }
                 model.setStrokeType(shape.getStrokeType());
-                model.notifyObservers();
                 
                 Global.selectedShape.put(i, shape);
                 //SwingMethods.repaintJTabbProp();
                 Global.offSet.x = Global.pointPressed.x;// - shape.getShape().getBounds().x;
                 Global.offSet.y = Global.pointPressed.y;// - shape.getShape().getBounds().y;
+                model.notifyObservers();
                 return;
             }
         }

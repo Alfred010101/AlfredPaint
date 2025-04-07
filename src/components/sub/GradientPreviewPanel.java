@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import model.PropertiesModel;
+import utils.global.Global;
+import utils.global.ShapeController;
 import utils.interfaces.PropertiesObserver;
 
 /**
@@ -22,13 +24,13 @@ public class GradientPreviewPanel extends JPanel implements PropertiesObserver
     private final JButton startColorButton;
     private final JButton endColorButton;
     private final PropertiesModel model;
-    
+
     public GradientPreviewPanel(PropertiesModel model, JButton startColorButton, JButton endColorButton)
     {
         this.model = model;
         this.startColorButton = startColorButton;
         this.endColorButton = endColorButton;
-        
+
         this.startColorButton.addActionListener(e -> updateColor(startColorButton, true));
         this.endColorButton.addActionListener(e -> updateColor(endColorButton, false));
 
@@ -49,6 +51,9 @@ public class GradientPreviewPanel extends JPanel implements PropertiesObserver
             {
                 model.setEndGradientColor(newColor);
             }
+            
+            ShapeController.applyChangesToSelectedShape(model);
+            
             repaint();
         }
     }
@@ -66,6 +71,6 @@ public class GradientPreviewPanel extends JPanel implements PropertiesObserver
     @Override
     public void onPropertiesChanged(PropertiesModel model)
     {
-        
+
     }
 }

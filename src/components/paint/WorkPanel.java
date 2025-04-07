@@ -89,6 +89,5 @@ public class WorkPanel extends JPanel implements PropertiesObserver
     public void onPropertiesChanged(PropertiesModel model)
     {
         repaint();
-        System.out.println("REpinto panel de trabajo");
     }
 }

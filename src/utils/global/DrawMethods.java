@@ -74,7 +74,6 @@ public class DrawMethods
     
     public static GradientPaint getGradient(PropertiesModel model)
     {
-        System.out.println("" + model.getEndGradientColor());
         return switch (model.getFillType())
         {
             case EMPTY -> null;

@@ -11,10 +11,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import model.PropertiesModel;
-import utils.enums.FillType;
 import utils.enums.Mode;
 import utils.enums.StrokeType;
 import utils.global.Global;
+import utils.global.ShapeController;
 import utils.interfaces.PropertiesObserver;
 import utils.interfaces.UnionFillStroke;
 
@@ -83,7 +83,6 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
             UnionFillStroke key = getCurrentType(model);
             buttons.get(key).setSelected(true);
             cardLayout.show(containerCard, key.getKey());
-            System.out.println("Llamado...");
         }
     }
 
@@ -93,6 +92,11 @@ public abstract class ProperityPanel extends JPanel implements PropertiesObserve
         {
             key.applyToModel(model);
             cardLayout.show(containerCard, key.getKey());
+            
+            if (!Global.selectedShape.isEmty())
+            {
+                ShapeController.applyChangesToSelectedShape(model);                
+            }
         };
     }
 }

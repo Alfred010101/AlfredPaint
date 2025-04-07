@@ -36,7 +36,7 @@ public class PaintApp extends JFrame
     public PaintApp()
     {
         super("Paint");
-        setSize(new Dimension(1200, 600));
+        setSize(new Dimension(810, 510));
         setMinimumSize(new Dimension(800, 500));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

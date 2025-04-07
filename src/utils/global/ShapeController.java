@@ -38,7 +38,7 @@ public class ShapeController
         );
 
         Global.shapes.set(Global.selectedShape.getKey(), myShape);
-        PaintApp.workPanel.repaint();
+        model.notifyObservers();
     }
 
     private static MyShape returnShape(PropertiesModel model, ShapeType shapeType, Shape shape)
@@ -69,6 +69,7 @@ public class ShapeController
         };
     }
 
+    //descontinuar este metodo
     public static void shapeSelected()
     {
         if (!(Global.ACTIVE_MODE instanceof Mode) || Global.selectedShape.isEmty())

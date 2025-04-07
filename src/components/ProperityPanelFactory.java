@@ -1,5 +1,6 @@
 package components;
 
+import components.paint.Methods;
 import components.sub.CustomToggleButton;
 import components.sub.GradientPreviewPanel;
 import components.sub.LineStyleRenderer;
@@ -7,6 +8,8 @@ import components.sub.MyIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,6 +24,7 @@ import javax.swing.JToggleButton;
 import model.PropertiesModel;
 import utils.enums.StrokeCap;
 import utils.enums.StrokeJoin;
+import utils.global.Const;
 import utils.global.Global;
 import utils.global.ShapeController;
 import utils.interfaces.PropertiesObserver;
@@ -63,12 +67,7 @@ public class ProperityPanelFactory
             {
                 model.setFillColor(newColor);
                 colorButton.setBackground(newColor);
-                if (!Global.selectedShape.isEmty())
-                {
-                    Global.selectedShape.getMyShape().setFillColor(ShapeController.applyChangesFiller(model));  
-                    System.out.println("Notificando cambios");
-                    model.notifyObservers();
-                }
+                ShapeController.applyChangesToSelectedShape(model);
             }
         });
         model.addObserver((PropertiesModel model1) ->
@@ -151,6 +150,7 @@ public class ProperityPanelFactory
             {
                 colorButton.setBackground(newColor);
                 model.setStrokeColor(newColor);
+                ShapeController.applyChangesToSelectedShape(model);
             }
         });
 
@@ -209,6 +209,7 @@ public class ProperityPanelFactory
         {
             model.setCurrentWidth(widthSlider.getValue());
             widthValueLabel.setText(String.valueOf(model.getCurrentWidth()));
+            ShapeController.applyChangesToSelectedShape(model);
         });
 
         model.addObserver((PropertiesModel model1) ->
@@ -241,6 +242,7 @@ public class ProperityPanelFactory
             btns[i].addActionListener(e ->
             {
                 item.applyTo(model);
+                ShapeController.applyChangesToSelectedShape(model);
             });
             btns[i].setSelected(item.isSelected(model));
             capButtonGroup.add(btns[i]);
@@ -263,87 +265,27 @@ public class ProperityPanelFactory
 
     private JPanel panelStyle()
     {
-        float[][] patterns =
-        {
-            null, // Continua
-
-            {
-                5, 3
-            },
-            {
-                8, 4
-            },
-            {
-                10, 5
-            },
-            {
-                12, 6
-            },
-            {
-                15, 5
-            },
-            {
-                20, 10
-            }, // Discontinuos
-
-            {
-                2, 2
-            },
-            {
-                3, 3
-            },
-            {
-                4, 4
-            },
-            {
-                5, 5
-            }, // Punteados
-
-            {
-                10, 3, 3, 3
-            },
-            {
-                15, 5, 5, 5
-            },
-            {
-                20, 5, 5, 5, 5, 5
-            }, // Mixtos
-
-            {
-                15, 5, 3, 5
-            },
-            {
-                20, 10, 5, 10
-            }, // Guiones
-
-            {
-                5, 3, 15, 3
-            },
-            {
-                8, 4, 20, 4
-            }, // Puntos-guis
-
-            {
-                10, 4, 2, 4, 2, 4
-            },
-            {
-                15, 5, 3, 5, 3, 5, 3, 5
-            } // Complejos
-        };
-        JComboBox<float[]> styleCombo = new JComboBox<>(patterns);
+        JComboBox<float[]> styleCombo = new JComboBox<>(Const.patterns);
         styleCombo.setRenderer(new LineStyleRenderer());
         styleCombo.setMaximumRowCount(20);
+        styleCombo.setSelectedIndex(Methods.encontrarIndicePatron(model.getDashPattern()));
         styleCombo.addActionListener(e ->
         {
             int patter = styleCombo.getSelectedIndex();
-            model.setDashPattern((patter == -1) ? null : patterns[patter]);
-        });
+            model.setDashPattern((patter == -1) ? null : Const.patterns[patter]);
+            if (!Global.selectedShape.isEmty())
+            {
+//                ShapeController.applyChangesToSelectedShape(model);
+                Global.selectedShape.getMyShape().setStroke(Methods.updateStroke(model));
+//                System.out.println(Global.selectedShape.getMyShape().getStroke());
+                model.notifyObservers();
+            }
 
-        styleCombo.setSelectedIndex(encontrarIndicePatron(patterns, model.getDashPattern()));
+        });
 
         model.addObserver((PropertiesModel model1) ->
         {
-            styleCombo.setSelectedIndex(encontrarIndicePatron(patterns, model.getDashPattern()));
+            styleCombo.setSelectedIndex(Methods.encontrarIndicePatron(model.getDashPattern()));
         });
 
         return new ProperityPanelBuilder()
@@ -351,46 +293,5 @@ public class ProperityPanelFactory
                 .addComponent(new JLabel("Estilo:"))
                 .addComponent(styleCombo)
                 .build();
-    }
-
-    private int encontrarIndicePatron(float[][] patterns, float[] patronBuscado)
-    {
-        for (int i = 0; i < patterns.length; i++)
-        {
-            if (patterns[i] == null)
-            {
-                if (patronBuscado == null)
-                {
-                    return i; // Caso especial para el primer elemento null
-                }
-                continue;
-            }
-
-            if (patronBuscado == null)
-            {
-                continue;
-            }
-
-            if (patterns[i].length != patronBuscado.length)
-            {
-                continue;
-            }
-
-            boolean coincide = true;
-            for (int j = 0; j < patterns[i].length; j++)
-            {
-                if (patterns[i][j] != patronBuscado[j])
-                {
-                    coincide = false;
-                    break;
-                }
-            }
-
-            if (coincide)
-            {
-                return i;
-            }
-        }
-        return -1; // Retorna -1 si no se encuentra el patrón
     }
 }
